@@ -4,7 +4,6 @@ import { StyleSheet , Text , View  , Image, Button} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import userStore from "../Controller/UserController";
 import * as firebaseAuth from 'firebase/auth'
-import * as firebaseApp from 'firebase/app'
 import { firebaseAppStore } from "../Controller/UserController";
 
 
