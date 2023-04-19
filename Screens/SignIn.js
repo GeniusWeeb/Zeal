@@ -14,6 +14,7 @@ import { firebaseAppStore } from '../Controller/UserController';
 
 
 
+
 WebBrowser.maybeCompleteAuthSession();
 
 if (!firebaseApp.getApps().length) {
@@ -97,4 +98,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+
 });

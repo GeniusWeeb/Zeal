@@ -2,7 +2,7 @@ import SignIn from "./Screens/SignIn";
 import HomeScreen from "./Screens/HomeScreen";
 import Profile from "./Screens/Profile";
 import SubTaskCreate from "./Screens/SubTaskCreate";
-import TaskCreate from "./Screens/TaskCreate";
+import CategoryCreate from "./Screens/CategoryCreate";
 import TaskView from "./Screens/TaskView";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -35,13 +35,13 @@ export default function App()
               options={{title: "Profile",animation :"slide_from_right",}}
               />
                <Stack.Screen   
-              name="TaskCreate"
-              component={Profile}
-              options={{title: "Create your Categories",animation :"slide_from_right",}}
+              name="CategoryCreate"
+              component={CategoryCreate}
+              options={{title: "Create your Categories",animation :"slide_from_right"}}
               />
                <Stack.Screen   
               name="SubTaskCreate"
-              component={Profile}
+              component={SubTaskCreate}
               options={{title: "Create your SubPlans",animation :"slide_from_right",}}
               />
                <Stack.Screen   

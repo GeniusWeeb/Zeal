@@ -1,12 +1,27 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet , Text , View } from "react-native";
+import { GETDATA, GetSubCategories } from "../Controller/DatabaseController";
 
 export default function TaskView()
 {
+    //THIS PAGE COMES WHEN YOU CLICK INDIVIDUAL CATEGORIES
+
+    const route =  useRoute();
+    const navigation = useNavigation();
+    const name   =  route.params?.name;
+
+
+    function Get()
+    {
+        //Show tasks
+        GetSubCategories(auth.currentUser,name);
+      
+    }
 
     return (
 
         <View style = {styles.container}>
+        <Get/>
         <Text>Enjoy your tasks </Text>   
         <StatusBar style="auto"/> 
         </View>

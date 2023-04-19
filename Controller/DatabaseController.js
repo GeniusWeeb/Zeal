@@ -16,10 +16,10 @@ export const firebaseConfig = {
   };
   
  //console.log(addedData["JobProfile"]["bio"]["name "])
-export async function PUSH(body , headers , currentUser)
+export async function PushData(body , headers , currentUser , endPoint)
 {
-    const response =  await fetch(`${url}/${currentUser.uid}.json` ,{
-        method: "PUSH" , 
+    const response =  await fetch(`${url}/${currentUser.uid}/${endPoint}.json` ,{
+        method: "PUT" , 
         headers: headers,
         body: body
       });
@@ -32,11 +32,11 @@ export async function PUSH(body , headers , currentUser)
 // we want to avoid repeated update calls onto the server 
 // so we can update the local json string and patch the whole node once and for all
 
-export async function PatchData(body , headers , currentUser)
+export async function PatchData(body , headers , currentUser , endPoint)
 {
     // WE CAN AD APPENDED URL SECTIONS AND HAVE THEM SAVED and we can just operawte on the base url  that is upto 
     // the unique user id
-    const response =  await fetch(`https://zeal-383911-default-rtdb.europe-west1.firebasedatabase.app/users/${currentUser.uid}.json` ,{
+    const response =  await fetch(`https://zeal-383911-default-rtdb.europe-west1.firebasedatabase.app/users/${currentUser.uid}/${endPoint}.json`,{
         method: "PATCH" , 
         headers: headers,
         body: body
@@ -94,12 +94,12 @@ export async function DeleteSubTasks(body , headers , currentUser)
 }
 
 
-//as soon as delete happens we fetch the updated stuff or when addition happens , in both case
-//IN THE HOMEPAGE WE ARE ONLY SHOWING, TASK CATEGORIES SINCE THEY ARE THE PRIMARY FORM OF DIFFERNTIATION BETWEEN DIFFERENT THINGS
 
-//PUT, PATCH, GET AND DELETE -> Sample
-async function addDataToFirestore() {  
-    
+
+//Task content
+
+export async function GetCategories( currentUser)
+{
   // get the Firebase ID token
   const idToken = await currentUser.getIdToken;
   // set up the request headers, including the Firebase ID token in the Authorization header
@@ -107,13 +107,42 @@ async function addDataToFirestore() {
     "Authorization": `Bearer ${idToken}`,
     "Content-Type": "application/json"
   });
-  const data = {
-      "name ": "yeso" ,
-      "age" : 12
-
-  }
-  const method = "PATCH"
-  const body = JSON.stringify(data);
-  PatchData(body , headers , currentUser);
- 
+   const response =  await fetch(`https://zeal-383911-default-rtdb.europe-west1.firebasedatabase.app/users/${currentUser.uid}.json?shallow=true` ,{
+  method: "GET" , 
+  headers: headers,
+});
+const addedData = await response.json();
+for (let prop in addedData) {
+  console.log(` ${prop}`);
 }
+
+}
+
+
+//When Category is clicked -> go to new page and get this 
+export async function GetSubCategories( currentUser , categoryName)
+{
+  // get the Firebase ID token
+  const idToken = await currentUser.getIdToken;
+  // set up the request headers, including the Firebase ID token in the Authorization header
+  const headers = new Headers({
+    "Authorization": `Bearer ${idToken}`,
+    "Content-Type": "application/json"
+  });
+   const response =  await fetch(`https://zeal-383911-default-rtdb.europe-west1.firebasedatabase.app/users/${currentUser.uid}/${categoryName}/names.json` ,{
+  method: "GET" , 
+  headers: headers,
+});
+const addedData = await response.json();
+//response.json can be stored in => local storage and parsed directly to the UI elemtns
+// console.log("Added data:", addedData);
+for (let prop in addedData) {
+  console.log(` ${prop}`);
+}
+
+}
+
+
+//as soon as delete happens we fetch the updated stuff or when addition happens , in both case
+//IN THE HOMEPAGE WE ARE ONLY SHOWING, TASK CATEGORIES SINCE THEY ARE THE PRIMARY FORM OF DIFFERNTIATION BETWEEN DIFFERENT THINGS
+//PUT, PATCH, GET AND DELETE -> Sample
