@@ -8,18 +8,23 @@ import * as firebaseAuth from 'firebase/auth'
 import { ResponseType } from 'expo-auth-session';
 import { ScreenStack } from 'react-native-screens';
 import { NavigationContext, useNavigation } from '@react-navigation/native';
-
 import {  firebaseConfig, PatchData } from '../Controller/DatabaseController';
-import userStore, { useAssignUserController, useUserController } from '../Controller/UserController';
+import userStore,{ useAssignUserController, useUserController } from '../Controller/UserController';
+import { firebaseAppStore } from '../Controller/UserController';
+
+
 
 WebBrowser.maybeCompleteAuthSession();
 
-
+if (!firebaseApp.getApps().length) {
+   firebaseAppStore.getState().AssignApp(  firebaseApp.initializeApp(firebaseConfig, "Zeal"));
+ 
+}
 export default function SignIn() {
 
-    const navigation = useNavigation();
-    const app =   firebaseApp.initializeApp(firebaseConfig, "Zeal");
-    const auth = firebaseAuth.getAuth(app);
+    const navigation = useNavigation(); 
+    var app = firebaseAppStore.getState().currentApp;
+    var auth =  firebaseAuth.getAuth(app);
     const [accessToken, setAccessToken] = React.useState(null);
     var credential ; 
     const[user ,SetFinalUser] = React.useState(null);
@@ -32,7 +37,6 @@ export default function SignIn() {
     React.useEffect(() => {  
       if (response?.type === "success")
       { 
-      
         setAccessToken(response.authentication.accessToken);
         const idToken =response.authentication;
         credential = firebaseAuth.GoogleAuthProvider.credential(idToken.idToken);
@@ -41,37 +45,22 @@ export default function SignIn() {
       }, 
       [response, accessToken]);
 
-     {
-        React.useEffect(() =>{
-
-        if(firebaseApp.getApp.length)
-         {
-          const unsub = auth.onAuthStateChanged(
-               (user) =>{
-                  console.log("Auth changed")
-                userStore.getState().assignUser(user)
-         
-               }
-          );
-          return() => unsub ;
-        }
-
-          
-             
-
-        }, [])
-
-     }
+     
+     
     async function SignInGoogle()
       {        
         try{
           
-            let result =  await firebaseAuth.signInWithCredential(auth , credential)
+              await firebaseAuth.signInWithCredential(auth , credential).then((result) => {
               const user =  result.user;
-              userStore.getState().assignUser(result.user);
-              SetFinalUser(userStore.getState().currentUser);
-              navigation.navigate("HomeScreen");
-
+              auth.onAuthStateChanged(() => {
+                userStore.getState().assignUser(user);
+                SetFinalUser(userStore.getState().currentUser);
+                navigation.navigate("HomeScreen");
+        
+              });
+            });
+              
             }catch (error) {
             console.error(error);
           }
@@ -91,7 +80,8 @@ export default function SignIn() {
 
   return (
     <SafeAreaView style={styles.container}>
-    { !user && <Button title=' Login' onPress={() => promptAsync()} />}
+    
+    { <Button title=' Login' onPress={() => promptAsync()} />}
     <StatusBar style="dark" />
     </SafeAreaView>
   );

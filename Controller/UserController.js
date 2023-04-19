@@ -1,7 +1,6 @@
 import {create} from "zustand";
 
 const userStore = create((set) => ({
-
   currentUser: null,
   currentUserPicture : null ,
   assignUser: (user) =>
@@ -9,7 +8,7 @@ const userStore = create((set) => ({
       currentUser: user,
     })),
 
-  removeUser: () =>
+  RemoveUser: () =>
     set((state) => ({
       currentUser: null,
     })),
@@ -17,5 +16,18 @@ const userStore = create((set) => ({
     currentUserPicture: uri
   }))
 }));
+
+export const firebaseAppStore =create ( (set) => 
+({
+    currentApp:null ,
+    AssignApp : (app) =>
+    set((state) => ({
+      currentApp: app,
+    })),
+    
+
+})
+
+);
 
 export default userStore;

@@ -27,7 +27,7 @@ export default function App()
                 <Stack.Screen   
               name="HomeScreen"
               component={HomeScreen}
-              options={{title: "Welcome", headerBackVisible: false,animation :"fade_from_bottom",gestureEnabled:false}}
+              options={{title: "Welcome", headerBackVisible: false,animation :"fade",gestureEnabled:false}}
               />
                 <Stack.Screen   
               name="Profile"
