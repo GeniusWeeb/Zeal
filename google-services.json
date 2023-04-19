@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "381324936027",
+    "project_id": "zeal-383911",
+    "storage_bucket": "zeal-383911.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381324936027:android:9d434aee5d2ca01230507e",
+        "android_client_info": {
+          "package_name": "com.bartoemus.zeal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "381324936027-mnoj4t98j0elf7g7totb9bkjflv76om3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bartoemus.zeal",
+            "certificate_hash": "63b87d2dbaa7e97668f41529a20a9945404b2ca5"
+          }
+        },
+        {
+          "client_id": "381324936027-guqsm5hvpah7sva0edagcnnp9147rvh0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDutxIIafjVl_Uf3ySyG-JIj2aIuZA_lqM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "381324936027-guqsm5hvpah7sva0edagcnnp9147rvh0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "381324936027-bjbcdlp87kshmgntcf56bco0ltdfe13f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bartoemus.zeal"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,20 +1,59 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import SignIn from "./Screens/SignIn";
+import HomeScreen from "./Screens/HomeScreen";
+import Profile from "./Screens/Profile";
+import SubTaskCreate from "./Screens/SubTaskCreate";
+import TaskCreate from "./Screens/TaskCreate";
+import TaskView from "./Screens/TaskView";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+const Stack = createNativeStackNavigator();
+export default function App()
+{
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+ 
+  return(
+          <NavigationContainer>
+              <Stack.Navigator>
+
+              <Stack.Screen   
+              name="SignIn"
+              component={SignIn}
+              options={
+                {title: "Sign In",
+              headerBackVisible: false}
+             }         
+              />
+
+                <Stack.Screen   
+              name="HomeScreen"
+              component={HomeScreen}
+              options={{title: "Welcome", headerBackVisible: false,animation :"fade_from_bottom",gestureEnabled:false}}
+              />
+                <Stack.Screen   
+              name="Profile"
+              component={Profile}
+              options={{title: "Profile",animation :"slide_from_right",}}
+              />
+               <Stack.Screen   
+              name="TaskCreate"
+              component={Profile}
+              options={{title: "Create your Categories",animation :"slide_from_right",}}
+              />
+               <Stack.Screen   
+              name="SubTaskCreate"
+              component={Profile}
+              options={{title: "Create your SubPlans",animation :"slide_from_right",}}
+              />
+               <Stack.Screen   
+              name="TaskView"
+              component={Profile}
+              options={{title: "Task it",animation :"slide_from_right",}}
+              />
+
+
+              </Stack.Navigator>
+        
+          </NavigationContainer>
+
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
