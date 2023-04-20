@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet , Text , View  , Image, Button} from "react-native";
+import { StyleSheet , Text , View  , Image, Button, TouchableOpacity} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import userStore from "../Controller/UserController";
 import * as firebaseAuth from 'firebase/auth'
@@ -17,24 +17,25 @@ export default function Profile()
     return (
 
         <SafeAreaView style = {styles.container}>
-        <Text>Welcome to Profile Screen {userStore.getState().currentUser.displayName }</Text>      
-        
-        {<Image source={{ uri:userStore.getState().currentUserPicture }} style={{ width: 100, height: 100, borderRadius: 50 }} /> }
-        <Button title="Sign out"
-         onPress={()=> {
-            auth.signOut().then(() => {
-                auth.onAuthStateChanged((user) => {
-                  if (!user) {
-                    console.log("User is signed out");
-                    // Clear the user's information from the application stat
-                    userStore.getState().RemoveUser();
-                    navigation.navigate("SignIn");
-                  }
-                });
-              });
-        }} />
+        {<Image source={{ uri:userStore.getState().currentUserPicture }} style={{ width: 200, height: 200, borderRadius: 100 , bottom:50}} /> }
 
-        <Text>{userStore.getState().currentUser.displayName}</Text>
+        <TouchableOpacity  onPress={() => { 
+                    userStore.getState().RemoveUser();
+                    if(!userStore.getState().currentUser && auth.currentUser)
+                        {                       
+                        auth.signOut().then( () => {navigation.navigate("SignIn")});
+                        }
+                                    
+                    }}>
+        <View style={styles.button}>
+            <Text style={styles.buttonText}>Sign Out</Text>
+        </View>
+        <View style={[ { marginTop: 10 }]}>
+        </View>
+        </TouchableOpacity>     
+    
+
+        <Text style = {styles.font}   >{userStore.getState().currentUser.displayName}</Text>
         <StatusBar style="auto"/> 
         </SafeAreaView>
     );
@@ -47,8 +48,37 @@ const styles=   StyleSheet.create(
 container:{
 
     flex:1 ,
-    backgroundColor: "#fff",
+    backgroundColor: "#4F4557",
     alignItems : 'center',
     justifyContent:'center',
+},
+
+font: {
+  fontWeight: "900",
+  bottom:50, 
+  fontSize:25,
+  color:"#F4EEE0",
+  // width:500,
+  justifyContent:"flex-end",
+ 
+}, button: {
+  width: 200,
+  height: 60,
+  backgroundColor: '#E86A33',
+  borderRadius: 50,
+  justifyContent: 'center',
+  alignItems: 'center',
+  fontWeight: '900',
+  bottom: -100,
+  padding:30
+ 
+
+},
+buttonText: {
+  color: '#fff',
+  fontSize: 25,
+  fontWeight: '900',
+  bottom:-10,
+  height:50
 },
 });

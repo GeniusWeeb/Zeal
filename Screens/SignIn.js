@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import * as WebBrowser from 'expo-web-browser'
-import { StyleSheet, Text, SafeAreaView, useColorScheme, Alert, Button, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, useColorScheme, Alert, Button, Image, TouchableOpacity, ScrollView } from 'react-native';
 import * as Google from 'expo-auth-session/providers/google'
 import * as React from 'react';
 import * as firebaseApp from 'firebase/app'
@@ -49,21 +49,26 @@ export default function SignIn() {
      
      
     async function SignInGoogle()
-      {        
-        try{
+      {         
+
+
+      
+        try{  
           
               await firebaseAuth.signInWithCredential(auth , credential).then((result) => {
               const user =  result.user;
-              auth.onAuthStateChanged(() => {
+             if(user)
+             {
+                console.log("going to home screen")
                 userStore.getState().assignUser(user);
                 SetFinalUser(userStore.getState().currentUser);
-                navigation.navigate("HomeScreen");
-        
-              });
-            });
-              
-            }catch (error) {
-            console.error(error);
+                navigation.navigate("HomeScreen");       
+              }});
+                  
+          }
+          catch(error)
+          {
+            console.log(error)
           }
         
       }
@@ -81,6 +86,7 @@ export default function SignIn() {
 
   return (
     <SafeAreaView style={styles.container}>
+     
     
     { <Button title=' Login' onPress={() => promptAsync()} />}
     <StatusBar style="dark" />

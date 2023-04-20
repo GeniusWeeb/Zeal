@@ -6,6 +6,7 @@ import { GetCategories, PatchData } from "../Controller/DatabaseController";
 import * as firebaseAuth from 'firebase/auth'
 import { firebaseAppStore } from "../Controller/UserController";
 import { CategoryStore } from "../Controller/UserController";
+import { useState } from "react";
 import React from "react";
 export default function HomeScreen()
 
@@ -15,41 +16,64 @@ export default function HomeScreen()
     const navigation = useNavigation();
     const user   =  route.params?.user;
     const auth =  firebaseAuth.getAuth(firebaseAppStore.getState().currentApp);
+    const [category, setCategory] = useState([]);
+
   
-    function Get() {
-      let contAr = [];
-      GetCategories(auth.currentUser).then((result) => {
-        for (let prop in result) {
-          contAr.push(`${prop}`)
-        }
-        CategoryStore.getState().setCategories(contAr);
-        CategoryStore.getState().categories.map((item , index) => {
-          console.log(item)
+  React.useEffect ( () => {
+    setCategory(CategoryStore.getState().categories);
+  } , [CategoryStore.getState().categories])
+  
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('state', (event) => {
+      // Check if the current screen is HomeScreen
+      if (event.data.state.routes[event.data.state.index].name === 'HomeScreen') {
+        // Fetch categories here
+        GetCategories(auth.currentUser).then((result) => {
+          let categories = [];
+          for (let prop in result) {
+            categories.push(`${prop}`)
+          }
+          CategoryStore.getState().setCategories(categories);
+          setCategory(categories);
         })
-      })
-    }
-
-
+      }
+    });
+  
+    return unsubscribe;
+  }, [navigation]);
   return (    
     
     <View style = {styles.container}>
-    <Get/> 
-  {/* <Button title="Profile" onPress={()=> navigation.navigate("Profile" , user)}/> */}
-        
-    <StatusBar style="auto"/> 
-    <View style = {styles.buttonContainer}>
-       <Button title="Create Task" onPress={() => navigation.navigate("CategoryCreate")}/> 
-     </View>
-    <View style={styles.footer}>
-        <Text>Footer content goes here</Text>
-            <View style= {styles.footerButtons}>
-                <Button title="Buton1"/>
-                <Button title="Buton2"/>
-                <Button title = "Button3"/>
-            </View>
+    {/* <Button title="Profile" onPress={()=> navigation.navigate("Profile" , user)}/> */}
+    <ScrollView>
+      {category.map((item, index) => (
+        <TouchableOpacity key={index} onPress={() => {}}>
+        <View style={styles.button}>
+            <Text style={styles.buttonText}>{item}</Text>
         </View>
-   <Text></Text> 
+        <View style={[ { marginTop: 10 }]}>
+        </View>
+        </TouchableOpacity>     
+      ))}
+    </ScrollView>
+    <StatusBar style="auto"/> 
+
+    <TouchableOpacity onPress={() => { navigation.navigate("CategoryCreate")}}>
+        <View style={styles.taskButtons} >
+            <Text style={styles.buttonText}>Create Task</Text>
+        </View>
+     </TouchableOpacity>  
+    <View style={styles.footer}>
+      <Text>Footer content goes here</Text>
+      <View style= {styles.footerButtons}>
+        <Button title="Buton1"/>
+        <Button title="Buton2"/>
+        <Button title="Button3"/>
+      </View>
     </View>
+    <Text></Text> 
+  </View>
 );
 
 
@@ -61,7 +85,7 @@ const styles=   StyleSheet.create(
 container:{
 
     flex:1 ,
-    backgroundColor: "#aff",
+    backgroundColor: "#41644A",
     alignItems : 'center',
     justifyContent:'space-evenly',
 },
@@ -71,8 +95,23 @@ buttonContainer: {
     position: 'absolute',
     bottom: 80,
     width: '100%',
-    padding: 0,
+    padding: 50,
+  backgroundColor:'#41644A'
     
+
+},
+
+taskButtons :{
+    width:200,
+    backgroundColor:'#41644A',
+    height: 50,
+    backgroundColor: '#41644A',
+    borderRadius: 50,
+   justifyContent: 'center',
+   alignItems: 'center',
+    fontWeight: '100',
+    bottom: 45,
+    padding:0,
 
 },
 footer: {
@@ -80,7 +119,7 @@ footer: {
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#DDD2DD',
+    backgroundColor: '#F2E3DB',
     alignItems: 'center',
     justifyContent: 'center',
     height:75,
@@ -92,14 +131,14 @@ footer: {
     justifyContent: 'space-around',
   },
   header: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#fff',
+    backgroundColor: '#2A2F4F',
     height: 80,
     paddingHorizontal: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
+    borderBottomColor: '2A2F4F',
   },
   logo: {
     width: 40,
@@ -107,8 +146,32 @@ footer: {
     resizeMode: 'contain',
   },
   ScrollView : {
-    flex:1
+    flex:1,
+    
 
 
-  }
+  },
+  button: {
+    width: 300,
+    height: 60,
+    backgroundColor: '#E86A33',
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontWeight: '900',
+    bottom: 0,
+    padding:20
+   
+
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '900',
+  },
+  box: {
+    backgroundColor: 'gray',
+    padding: 20,
+    borderRadius: 10,
+  },
 });
