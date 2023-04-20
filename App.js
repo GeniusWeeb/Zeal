@@ -31,7 +31,7 @@ export default function App() {
         <Stack.Screen
           name="SignIn"
           component={SignIn}
-          options={{ title: "Sign In", headerBackVisible: false }}
+          options={{ title: "Sign In", headerBackVisible: false  , headerStyle :{ backgroundColor:"#393646"}}}
         />
         <Stack.Screen
           name="HomeScreen"
@@ -71,7 +71,7 @@ export default function App() {
         <Stack.Screen
           name="TaskView"
           component={TaskView}
-          options={{ title: "Task it", animation: "slide_from_right" }}
+          options={{ title: "Task it", animation: "fade" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

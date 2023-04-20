@@ -1,6 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet , Text , View } from "react-native";
 import { GETDATA, GetSubCategories } from "../Controller/DatabaseController";
+import { useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 export default function TaskView()
 {
@@ -21,7 +23,7 @@ export default function TaskView()
     return (
 
         <View style = {styles.container}>
-        <Get/>
+        {/* <Get/> */}
         <Text>Enjoy your tasks </Text>   
         <StatusBar style="auto"/> 
         </View>

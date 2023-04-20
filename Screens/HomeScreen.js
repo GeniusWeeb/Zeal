@@ -45,10 +45,12 @@ export default function HomeScreen()
   return (    
     
     <View style = {styles.container}>
-    {/* <Button title="Profile" onPress={()=> navigation.navigate("Profile" , user)}/> */}
     <ScrollView>
       {category.map((item, index) => (
-        <TouchableOpacity key={index} onPress={() => {}}>
+        <TouchableOpacity key={index} onPress={() => {
+
+          navigation.navigate("TaskView")
+        }}>
         <View style={styles.button}>
             <Text style={styles.buttonText}>{item}</Text>
         </View>
@@ -119,7 +121,7 @@ footer: {
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#F2E3DB',
+    backgroundColor: '#4F200D',
     alignItems: 'center',
     justifyContent: 'center',
     height:75,
