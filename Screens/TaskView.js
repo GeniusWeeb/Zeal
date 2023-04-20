@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet , Text , View , ScrollView , TouchableOpacity } from "react-native";
-import { GETDATA, GetSubCategories } from "../Controller/DatabaseController";
+import {  GetSubCategories } from "../Controller/DatabaseController";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import * as firebaseAuth from 'firebase/auth';

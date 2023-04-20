@@ -38,8 +38,8 @@ export default function App() {
           name="HomeScreen"
           component={HomeScreen}
           options={{
-            title:"",
-            headerBackVisible: false,
+             title:"",
+          headerBackVisible: false,
             headerBackTitleVisible:false,
             animation: "fade",
             gestureEnabled: false,

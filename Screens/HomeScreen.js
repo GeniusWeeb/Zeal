@@ -42,22 +42,26 @@ export default function HomeScreen()
   
     return unsubscribe;
   }, [navigation]);
+
+
+
+  
   return (    
     
     <View style = {styles.container}>
     <ScrollView>
-      {category.map((item, index) => (
-        <TouchableOpacity key={index} onPress={() => {
-          userStore.getState().SetCurrentUserCategory(item);     
-          navigation.navigate("TaskView" , { title: `${item}` })
-        }}>
-        <View style={styles.button}>
-         <Text style={styles.buttonText}>{item}</Text>
-        </View>
-        <View style={[ { marginTop: 10 }]}>
-        </View>
-        </TouchableOpacity>     
-      ))}
+        {category.map((item, index) => (
+          <TouchableOpacity key={index} onPress={() => {
+            userStore.getState().SetCurrentUserCategory(item);     
+            navigation.navigate("TaskView" , { title: `${item}` })
+          }}>
+          <View style={styles.button}>
+          <Text style={styles.buttonText}>{item}</Text>
+          </View>
+          <View style={[ { marginTop: 10 }]}>
+          </View>
+          </TouchableOpacity>     
+        ))}
     </ScrollView>
     <StatusBar style="light"/> 
 

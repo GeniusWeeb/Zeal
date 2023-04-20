@@ -44,7 +44,6 @@ export default function CategoryCreate()
       />
      <TouchableOpacity onPress={() => 
      {
-
         if(text)
             {
                 endPoint =  text;
