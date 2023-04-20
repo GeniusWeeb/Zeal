@@ -7,6 +7,7 @@ import TaskView from "./Screens/TaskView";
 import { Button, StyleSheet, Text } from "react-native";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import userStore from "./Controller/UserController";
 
 const Stack = createNativeStackNavigator();
 
@@ -71,7 +72,7 @@ export default function App() {
         <Stack.Screen
           name="TaskView"
           component={TaskView}
-          options={{ title: "Task it", animation: "fade" }}
+          options={{ animation: "fade" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

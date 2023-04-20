@@ -48,18 +48,18 @@ export default function HomeScreen()
     <ScrollView>
       {category.map((item, index) => (
         <TouchableOpacity key={index} onPress={() => {
-
-          navigation.navigate("TaskView")
+          userStore.getState().SetCurrentUserCategory(item);     
+          navigation.navigate("TaskView" , { title: `${item}` })
         }}>
         <View style={styles.button}>
-            <Text style={styles.buttonText}>{item}</Text>
+         <Text style={styles.buttonText}>{item}</Text>
         </View>
         <View style={[ { marginTop: 10 }]}>
         </View>
         </TouchableOpacity>     
       ))}
     </ScrollView>
-    <StatusBar style="auto"/> 
+    <StatusBar style="light"/> 
 
     <TouchableOpacity onPress={() => { navigation.navigate("CategoryCreate")}}>
         <View style={styles.taskButtons} >

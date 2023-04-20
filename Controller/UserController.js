@@ -3,17 +3,20 @@ import {create} from "zustand";
 const userStore = create((set) => ({
   currentUser: null,
   currentUserPicture : null ,
+  currentUserCategory: null ,
   assignUser: (user) =>
     set((state) => ({
       currentUser: user,
     })),
-
   RemoveUser: () =>
     set((state) => ({
       currentUser: null,
     })),
   assignUserPicture: (uri) => set((state) => ({
     currentUserPicture: uri
+  })),
+  SetCurrentUserCategory : (name) => set((state) => ({
+    currentUserCategory:name,
   }))
 }));
 
