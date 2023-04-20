@@ -121,7 +121,7 @@ footer: {
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#4F200D',
+    backgroundColor: '#263A29',
     alignItems: 'center',
     justifyContent: 'center',
     height:75,

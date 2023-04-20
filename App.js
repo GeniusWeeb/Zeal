@@ -42,7 +42,7 @@ export default function App() {
             headerBackTitleVisible:false,
             animation: "fade",
             gestureEnabled: false,
-            headerStyle: { backgroundColor: "#41644A" },
+            headerStyle: { backgroundColor: "#263A29" },
             headerRight: () => <ProfileButton />,
             headerLeft: () => <Logo/>
           }}
