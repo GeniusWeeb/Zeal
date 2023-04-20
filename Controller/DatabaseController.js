@@ -130,14 +130,10 @@ export async function GetSubCategories( currentUser , categoryName)
   method: "GET" , 
   headers: headers,
 });
-const addedData = await response.json();
-//response.json can be stored in => local storage and parsed directly to the UI elemtns
-// console.log("Added data:", addedData);
-for (let prop in addedData) {
-  console.log(` ${prop}`);
+return await response.json();
 }
 
-}
+
 
 
 //as soon as delete happens we fetch the updated stuff or when addition happens , in both case
