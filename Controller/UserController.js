@@ -30,4 +30,15 @@ export const firebaseAppStore =create ( (set) =>
 
 );
 
+export const CategoryStore = create((set) => ({
+  categories: [],
+  setCategories: (category) =>
+    set((state) => ({
+      categories: category,
+    })),
+}));
+
+
+
+
 export default userStore;

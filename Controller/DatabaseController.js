@@ -111,11 +111,8 @@ export async function GetCategories( currentUser)
   method: "GET" , 
   headers: headers,
 });
-const addedData = await response.json();
-for (let prop in addedData) {
-  console.log(` ${prop}`);
-}
-
+ 
+return await response.json();
 }
 
 
