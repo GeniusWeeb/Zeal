@@ -50,6 +50,19 @@ export default function SignIn() {
       }, 
       [response, accessToken]);
 
+
+
+    React.useEffect(() => {   
+         
+        if(userStore.getState().isUserSignedIn )
+        {
+
+          console.log(` User online? -> ${userStore.getState().isUserOnline}`)
+       // SetFinalUser(userStore.getState().currentUser);
+          navigation.navigate("HomeScreen");
+        }
+        
+      }, [userStore.getState().isUserSignedIn]);
      
      
     async function SignInGoogle()
@@ -60,7 +73,6 @@ export default function SignIn() {
               const user =  result.user;
              if(user)
              {
-
                 userStore.getState().SetIsUserOnline(true);
                 userStore.getState().assignUser(user,firebaseAppStore.getState().currentApp);            
                 SetFinalUser(userStore.getState().currentUser);
@@ -88,6 +100,11 @@ export default function SignIn() {
 
     function SetOfflineState()
     { 
+      if(!userStore.getState().isUserSignedIn)
+      {
+        Alert.alert("please Sign in");
+        return;
+      }
 
       userStore.getState().SetIsUserOnline(false);
       console.log(userStore.getState().isUserOnline);
@@ -104,9 +121,11 @@ export default function SignIn() {
       console.log(`Current AsyncStorage size: ${totalSize} bytes`);
     }
 
+ 
+
   return (
     <SafeAreaView style={styles.container}>  
-     <Button title=' Login' onPress={() => promptAsync()} />
+    {  < Button title=' Login' onPress={() => promptAsync()} />}
       <Button title = "Offline access" onPress={()=> SetOfflineState()}/>
       <Button title = "Storage access" onPress={()=> GetStorageSize()}/>
 

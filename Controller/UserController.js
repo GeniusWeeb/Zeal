@@ -25,6 +25,7 @@ const userStore = create(
       currentUser: null,
       currentUserPicture:null,
       isUserSignedIn:false,
+      currentUserApp:null
     })),
   assignUserPicture: (uri) => set((state) => ({
     currentUserPicture: uri
