@@ -52,9 +52,7 @@ const userStore = create(
         console.log("Problem while retrieving data")
         else
         {console.log("Finished adding user back") 
-        var auth =  firebaseAuth.getAuth(firebaseAppStore.getState().currentApp);
-        var token =   auth.currentUser.getIdToken(true);
-        console.log(token)
+    
           
       }
       }

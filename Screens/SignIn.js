@@ -69,7 +69,6 @@ export default function SignIn() {
 
       React.useEffect(()=>{
         console.log("Trying Silent Sign in")
-      //  console.log(userStore.getState().currentUser.getIdToken);
       },[userStore.getState().currentUserCredential]
       
       )
