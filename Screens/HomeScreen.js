@@ -26,10 +26,13 @@ export default function HomeScreen()
   
 
   React.useEffect(() => {
+
+
+    console.log(`User Signed in ??${userStore.getState().isUserSignedIn}`)
     const unsubscribe = navigation.addListener('state', (event) => {
       // Check if the current screen is HomeScreen
       if (event.data.state.routes[event.data.state.index].name === 'HomeScreen') 
-      {     
+      {         
         if(isOnline)
         {
           GetCategories(auth.currentUser).then((result) => {
@@ -49,10 +52,7 @@ export default function HomeScreen()
     return unsubscribe;
   }, [navigation]);
 
-  async function FetchDataFromLocalStorage()
-  {
-      await CategoryStore.getState().hydrate();
-  }
+
 
 
   
@@ -62,6 +62,7 @@ export default function HomeScreen()
     <ScrollView>
         {category.length != 0 &&   category.map((item, index) => (
           <TouchableOpacity key={index} onPress={() => {
+            //for task view title
             userStore.getState().SetCurrentUserCategory(item);     
             navigation.navigate("TaskView" , { title: `${item}` })
           }}>

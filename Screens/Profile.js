@@ -24,6 +24,7 @@ export default function Profile()
      userStore.getState().RemoveUser();
      CategoryStore.getState().setCategories([]);
      CategoryStore.persist.clearStorage();
+     userStore.persist.clearStorage();
      if(!userStore.getState().currentUser && auth.currentUser)
       {
       auth.signOut().then( () => {navigation.navigate("SignIn")});    

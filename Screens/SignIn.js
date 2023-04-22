@@ -1,3 +1,4 @@
+import { firebaseAppStore } from '../Controller/UserController';
 import { StatusBar } from 'expo-status-bar';
 import * as WebBrowser from 'expo-web-browser'
 import { StyleSheet, Text, SafeAreaView, useColorScheme, Alert, Button, Image, TouchableOpacity, ScrollView } from 'react-native';
@@ -10,22 +11,21 @@ import { ScreenStack } from 'react-native-screens';
 import { NavigationContext, useNavigation } from '@react-navigation/native';
 import {  firebaseConfig, PatchData } from '../Controller/DatabaseController';
 import userStore,{ useAssignUserController, useUserController } from '../Controller/UserController';
-import { firebaseAppStore } from '../Controller/UserController';
-
-
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 WebBrowser.maybeCompleteAuthSession();
 
 if (!firebaseApp.getApps().length) {
-   firebaseAppStore.getState().AssignApp(  firebaseApp.initializeApp(firebaseConfig, "Zeal"));
- 
+  console.log("Added firebase")
+  firebaseAppStore.getState().AssignApp(  firebaseApp.initializeApp(firebaseConfig, "Zeal")); 
 }
+
+
 export default function SignIn() {
 
     const navigation = useNavigation(); 
-    var app = firebaseAppStore.getState().currentApp;
-    var auth =  firebaseAuth.getAuth(app);
+    const app = firebaseAppStore.getState().currentApp;
+    var auth =  firebaseAuth.getAuth(firebaseAppStore.getState().currentApp);
     const [accessToken, setAccessToken] = React.useState(null);
     var credential ; 
     const[user ,SetFinalUser] = React.useState(null);
@@ -34,6 +34,10 @@ export default function SignIn() {
         iosClientId : "381324936027-bjbcdlp87kshmgntcf56bco0ltdfe13f.apps.googleusercontent.com",
         androidClientId : "381324936027-mnoj4t98j0elf7g7totb9bkjflv76om3.apps.googleusercontent.com"     
       });
+
+      React.useEffect(()=>{
+          console.log("App has been assigned");
+      },[firebaseAppStore.getState().currentApp] )
 
     React.useEffect(() => {  
       if (response?.type === "success")
@@ -50,15 +54,15 @@ export default function SignIn() {
      
     async function SignInGoogle()
       {              
-        try{  
-          
+        
+        try{ 
               await firebaseAuth.signInWithCredential(auth , credential).then((result) => {
               const user =  result.user;
              if(user)
              {
 
                 userStore.getState().SetIsUserOnline(true);
-                userStore.getState().assignUser(user);
+                userStore.getState().assignUser(user,firebaseAppStore.getState().currentApp);            
                 SetFinalUser(userStore.getState().currentUser);
                 navigation.navigate("HomeScreen");                    
               }})
@@ -88,14 +92,25 @@ export default function SignIn() {
       userStore.getState().SetIsUserOnline(false);
       console.log(userStore.getState().isUserOnline);
       navigation.navigate("HomeScreen");    
-     
+    }
 
+    async function GetStorageSize() {
+      let totalSize = 0;
+      const allKeys = await AsyncStorage.getAllKeys();
+      for (let key of allKeys) {
+        const value = await AsyncStorage.getItem(key);
+        totalSize += key.length + value.length;
+      }
+      console.log(`Current AsyncStorage size: ${totalSize} bytes`);
     }
 
   return (
-    <SafeAreaView style={styles.container}>   
+    <SafeAreaView style={styles.container}>  
      <Button title=' Login' onPress={() => promptAsync()} />
       <Button title = "Offline access" onPress={()=> SetOfflineState()}/>
+      <Button title = "Storage access" onPress={()=> GetStorageSize()}/>
+
+     
     <StatusBar style="dark" />
     </SafeAreaView>
   );
