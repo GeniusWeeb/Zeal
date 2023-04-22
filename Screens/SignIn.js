@@ -54,12 +54,20 @@ export default function SignIn() {
 
     React.useEffect(() => {   
          
+     
         if(userStore.getState().isUserSignedIn )
         {
+             console.log(` User online? -> ${userStore.getState().isUserOnline}`)      
+            // If the user is already signed in, assign the Firebase app to the store again before logging in the user
+            firebaseAppStore.getState().AssignApp(firebaseApp.initializeApp(firebaseConfig, "Zeal"));
+            const app = firebaseAppStore.getState().currentApp;
+            var auth = firebaseAuth.getAuth(firebaseAppStore.getState().currentApp);
+            console.log(`USer Signed in ? -> ${userStore.getState().isUserSignedIn} `)
+            console.log(firebaseApp.getApps().length);
+            const user = userStore.getState().currentUser;
+        // /    promptAsync();
 
-          console.log(` User online? -> ${userStore.getState().isUserOnline}`)
-       // SetFinalUser(userStore.getState().currentUser);
-          navigation.navigate("HomeScreen");
+            
         }
         
       }, [userStore.getState().isUserSignedIn]);
@@ -69,6 +77,7 @@ export default function SignIn() {
       {              
         
         try{ 
+          console.log("trying to sign in")
               await firebaseAuth.signInWithCredential(auth , credential).then((result) => {
               const user =  result.user;
              if(user)
@@ -77,7 +86,8 @@ export default function SignIn() {
                 userStore.getState().assignUser(user,firebaseAppStore.getState().currentApp);            
                 SetFinalUser(userStore.getState().currentUser);
                 navigation.navigate("HomeScreen");                    
-              }})
+              }}).catch(e)
+                {console.log(e)}
                   
           }
           catch(error)
@@ -108,7 +118,7 @@ export default function SignIn() {
 
       userStore.getState().SetIsUserOnline(false);
       console.log(userStore.getState().isUserOnline);
-      navigation.navigate("HomeScreen");    
+     navigation.navigate("HomeScreen");    
     }
 
     async function GetStorageSize() {

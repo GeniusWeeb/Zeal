@@ -28,7 +28,7 @@ export default function HomeScreen()
   React.useEffect(() => {
    
     const unsubscribe = navigation.addListener('state', (event) => {
-      // Check if the current screen is HomeScreen
+
       if (event.data.state.routes[event.data.state.index].name === 'HomeScreen') 
       {   
         console.log(`User Signed in ??${userStore.getState().isUserSignedIn}`)      

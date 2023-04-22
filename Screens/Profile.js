@@ -14,6 +14,12 @@ export default function Profile()
     const auth =  firebaseAuth.getAuth(firebaseAppStore.getState().currentApp);
     const  isOnline = userStore.getState().isUserOnline;  
 
+
+
+    function GoOnline()
+    {
+      userStore.getState().SetIsUserOnline(true);
+    }
     function PerformSignOut()
     {
       if(!isOnline) 
@@ -42,7 +48,18 @@ export default function Profile()
         </View>
         <View style={[ { marginTop: 10 }]}>
         </View>
+        </TouchableOpacity>    
+        <View style={[ { marginTop: 10 }]}> 
+        </View>
+
+        <TouchableOpacity  onPress={() => GoOnline()}>
+        <View style={styles.button}>
+            <Text style={styles.buttonText}>Go Online</Text>
+        </View>
+        <View style={[ { marginTop: 10 }]}>
+        </View>
         </TouchableOpacity>     
+    
     
 
      
