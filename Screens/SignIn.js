@@ -12,6 +12,7 @@ import { NavigationContext, useNavigation } from '@react-navigation/native';
 import {  firebaseConfig, PatchData } from '../Controller/DatabaseController';
 import userStore,{ useAssignUserController, useUserController } from '../Controller/UserController';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useStore } from 'zustand';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -26,6 +27,7 @@ export default function SignIn() {
     const navigation = useNavigation(); 
     const app = firebaseAppStore.getState().currentApp;
     var auth =  firebaseAuth.getAuth(firebaseAppStore.getState().currentApp);
+   
     const [accessToken, setAccessToken] = React.useState(null);
     var credential ; 
     const[user ,SetFinalUser] = React.useState(null);
@@ -39,54 +41,55 @@ export default function SignIn() {
           console.log("App has been assigned");
       },[firebaseAppStore.getState().currentApp] )
 
-    React.useEffect(() => {  
-      if (response?.type === "success")
-      { 
-        setAccessToken(response.authentication.accessToken);
-        const idToken =response.authentication;
-        credential = firebaseAuth.GoogleAuthProvider.credential(idToken.idToken);
-      //  SignInGoogle();
-      } accessToken && FetchUserInfo() && SignInGoogle();
-      }, 
-      [response, accessToken]);
-
-
-
-    React.useEffect(() => {   
-         
-     
-        if(userStore.getState().isUserSignedIn )
-        {
-             console.log(` User online? -> ${userStore.getState().isUserOnline}`)      
-            // If the user is already signed in, assign the Firebase app to the store again before logging in the user
-            firebaseAppStore.getState().AssignApp(firebaseApp.initializeApp(firebaseConfig, "Zeal"));
-            const app = firebaseAppStore.getState().currentApp;
-            var auth = firebaseAuth.getAuth(firebaseAppStore.getState().currentApp);
-            console.log(`USer Signed in ? -> ${userStore.getState().isUserSignedIn} `)
-            console.log(firebaseApp.getApps().length);
-            const user = userStore.getState().currentUser;
-        // /    promptAsync();
-
-            
+      React.useEffect(() => {  
+        if (response?.type === "success") { 
+          setAccessToken(response.authentication.accessToken);
+          const idToken = response.authentication;
+          credential = firebaseAuth.GoogleAuthProvider.credential(idToken.idToken);
         }
-        
-      }, [userStore.getState().isUserSignedIn]);
-     
+        accessToken && FetchUserInfo() && SignInGoogle();
+      }, [response, accessToken]);
+
+
+      React.useEffect(() => {
+        console.log(userStore.getState().isUserSignedIn)
+        // Check if user is already signed in
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+          if (user || userStore.getState().isUserSignedIn) {
+            SetFinalUser(userStore.getState().currentUser);
+            navigation.navigate("HomeScreen");
+          } else {
+            // User is signed out
+            console.log('User is not signed in.');
+          }
+        });
+        // Unsubscribe when component is unmounted
+        return () => unsubscribe();
+      }, []);
+
+      React.useEffect(()=>{
+        console.log("Trying Silent Sign in")
+      //  console.log(userStore.getState().currentUser.getIdToken);
+      },[userStore.getState().currentUserCredential]
+      
+      )
+
      
     async function SignInGoogle()
       {              
         
         try{ 
-          console.log("trying to sign in")
-              await firebaseAuth.signInWithCredential(auth , credential).then((result) => {
+              await firebaseAuth.signInWithCredential(auth , credential ).then((result) => {
               const user =  result.user;
              if(user)
              {
                 userStore.getState().SetIsUserOnline(true);
-                userStore.getState().assignUser(user,firebaseAppStore.getState().currentApp);            
+       
+                userStore.getState().assignUser(user,firebaseAppStore.getState().currentApp , credential);            
                 SetFinalUser(userStore.getState().currentUser);
-                navigation.navigate("HomeScreen");                    
-              }}).catch(e)
+           
+               //navigation.navigate("HomeScreen");                    
+              }}).catch
                 {console.log(e)}
                   
           }

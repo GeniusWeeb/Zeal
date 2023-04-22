@@ -1,6 +1,7 @@
 import {create} from "zustand";
 import {createJSONStorage, persist} from 'zustand/middleware'
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as firebaseAuth from 'firebase/auth';
 
 const userStore = create(
   persist
@@ -10,22 +11,26 @@ const userStore = create(
   currentUserPicture : null ,
   currentUserCategory: null ,
   currentUserApp:null,
+  currentUserCredential:null,
   isUserOnline : false,
   isUserSignedIn: false,
+
   lastUpdatedUser:Date.now(),
-  assignUser: (user, app) =>
+  assignUser: (user, app , credential) =>
     set((state) => ({
       currentUser: user,
       isUserSignedIn:true,
       lastUpdatedUser:Date.now(),
       currentUserApp:app,
+      currentUserCredential:credential
     })),
   RemoveUser: () =>
     set((state) => ({
       currentUser: null,
       currentUserPicture:null,
       isUserSignedIn:false,
-      currentUserApp:null
+      currentUserApp:null,
+      currentUserCredential:null ,
     })),
   assignUserPicture: (uri) => set((state) => ({
     currentUserPicture: uri
@@ -46,7 +51,12 @@ const userStore = create(
         if(error)
         console.log("Problem while retrieving data")
         else
-        console.log("Finished adding user back") 
+        {console.log("Finished adding user back") 
+        var auth =  firebaseAuth.getAuth(firebaseAppStore.getState().currentApp);
+        var token =   auth.currentUser.getIdToken(true);
+        console.log(token)
+          
+      }
       }
      }
   }
