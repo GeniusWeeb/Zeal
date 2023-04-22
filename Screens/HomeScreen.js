@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import { Button, StyleSheet , Text , View , Image , TouchableOpacity, ScrollView} from "react-native";
+import { Button, StyleSheet , Text , View , Image , TouchableOpacity, ScrollView, Alert} from "react-native";
 import userStore from "../Controller/UserController";
 import { GetCategories, PatchData } from "../Controller/DatabaseController";
 import * as firebaseAuth from 'firebase/auth'
@@ -17,6 +17,7 @@ export default function HomeScreen()
     const user   =  route.params?.user;
     const auth =  firebaseAuth.getAuth(firebaseAppStore.getState().currentApp);
     const [category, setCategory] = useState([]);
+    const  isOnline =  userStore.getState().isUserOnline? true: false ;
 
   
   React.useEffect ( () => {
@@ -27,22 +28,31 @@ export default function HomeScreen()
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('state', (event) => {
       // Check if the current screen is HomeScreen
-      if (event.data.state.routes[event.data.state.index].name === 'HomeScreen') {
-        // Fetch categories here
-        GetCategories(auth.currentUser).then((result) => {
-          let categories = [];
-          for (let prop in result) {
-            categories.push(`${prop}`)
-          }
+      if (event.data.state.routes[event.data.state.index].name === 'HomeScreen') 
+      {     
+        if(isOnline)
+        {
+          GetCategories(auth.currentUser).then((result) => {
+            let categories = [];
+            for (let prop in result) {
+              categories.push(`${prop}`)
+            }
           CategoryStore.getState().setCategories(categories);
-          setCategory(categories);
-        })
+           console.log(CategoryStore.getState().lastUpdated);
+            setCategory(categories);
+          })
+        }     
+         
       }
     });
   
     return unsubscribe;
   }, [navigation]);
 
+  async function FetchDataFromLocalStorage()
+  {
+      await CategoryStore.getState().hydrate();
+  }
 
 
   
@@ -50,7 +60,7 @@ export default function HomeScreen()
     
     <View style = {styles.container}>
     <ScrollView>
-        {category.map((item, index) => (
+        {category.length != 0 &&   category.map((item, index) => (
           <TouchableOpacity key={index} onPress={() => {
             userStore.getState().SetCurrentUserCategory(item);     
             navigation.navigate("TaskView" , { title: `${item}` })

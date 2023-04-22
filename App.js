@@ -32,7 +32,7 @@ export default function App() {
         <Stack.Screen
           name="SignIn"
           component={SignIn}
-          options={{ title: "Sign In", headerBackVisible: false  , headerStyle :{ backgroundColor:"#393646"}}}
+          options={{ title: "", headerBackVisible: false  , headerStyle :{ backgroundColor:"#393646"}}}
         />
         <Stack.Screen
           name="HomeScreen"

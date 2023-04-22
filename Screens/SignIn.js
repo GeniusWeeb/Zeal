@@ -49,21 +49,19 @@ export default function SignIn() {
      
      
     async function SignInGoogle()
-      {         
-
-
-      
+      {              
         try{  
           
               await firebaseAuth.signInWithCredential(auth , credential).then((result) => {
               const user =  result.user;
              if(user)
              {
-                console.log("going to home screen")
+
+                userStore.getState().SetIsUserOnline(true);
                 userStore.getState().assignUser(user);
                 SetFinalUser(userStore.getState().currentUser);
-                navigation.navigate("HomeScreen");       
-              }});
+                navigation.navigate("HomeScreen");                    
+              }})
                   
           }
           catch(error)
@@ -84,11 +82,20 @@ export default function SignIn() {
       userStore.getState().assignUserPicture(userInfo.picture);    
     }
 
-  return (
-    <SafeAreaView style={styles.container}>
+    function SetOfflineState()
+    { 
+
+      userStore.getState().SetIsUserOnline(false);
+      console.log(userStore.getState().isUserOnline);
+      navigation.navigate("HomeScreen");    
      
-    
-    { <Button title=' Login' onPress={() => promptAsync()} />}
+
+    }
+
+  return (
+    <SafeAreaView style={styles.container}>   
+     <Button title=' Login' onPress={() => promptAsync()} />
+      <Button title = "Offline access" onPress={()=> SetOfflineState()}/>
     <StatusBar style="dark" />
     </SafeAreaView>
   );

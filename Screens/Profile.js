@@ -1,8 +1,8 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet , Text , View  , Image, Button, TouchableOpacity} from "react-native";
+import { StyleSheet , Text , View  , Image, Button, TouchableOpacity, Alert} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import userStore from "../Controller/UserController";
+import userStore, { CategoryStore } from "../Controller/UserController";
 import * as firebaseAuth from 'firebase/auth'
 import { firebaseAppStore } from "../Controller/UserController";
 
@@ -12,21 +12,30 @@ export default function Profile()
     const route = useRoute();
     const navigation =  useNavigation();
     const auth =  firebaseAuth.getAuth(firebaseAppStore.getState().currentApp);
+    const  isOnline = userStore.getState().isUserOnline;  
 
+    function PerformSignOut()
+    {
+      if(!isOnline) 
+      {
+        Alert.alert("You need to be online to sign out")
+        return;
+      }
+     userStore.getState().RemoveUser();
+     CategoryStore.getState().setCategories([]);
+     CategoryStore.persist.clearStorage();
+     if(!userStore.getState().currentUser && auth.currentUser)
+      {
+      auth.signOut().then( () => {navigation.navigate("SignIn")});    
+      }               
+    }
 
     return (
+      
+        <SafeAreaView style = {styles.container}>  
+        {  <Image source={{ uri:userStore.getState().currentUserPicture }} style={{ width: 200, height: 200, borderRadius: 100 , bottom:50}} /> }
 
-        <SafeAreaView style = {styles.container}>
-        {<Image source={{ uri:userStore.getState().currentUserPicture }} style={{ width: 200, height: 200, borderRadius: 100 , bottom:50}} /> }
-
-        <TouchableOpacity  onPress={() => { 
-                    userStore.getState().RemoveUser();
-                    if(!userStore.getState().currentUser && auth.currentUser)
-                        {                       
-                        auth.signOut().then( () => {navigation.navigate("SignIn")});
-                        }
-                                    
-                    }}>
+        <TouchableOpacity  onPress={() => PerformSignOut()}>
         <View style={styles.button}>
             <Text style={styles.buttonText}>Sign Out</Text>
         </View>
@@ -35,7 +44,7 @@ export default function Profile()
         </TouchableOpacity>     
     
 
-        <Text style = {styles.font}   >{userStore.getState().currentUser.displayName}</Text>
+     
         <StatusBar style="auto"/> 
         </SafeAreaView>
     );
