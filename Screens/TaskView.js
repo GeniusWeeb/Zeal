@@ -28,7 +28,7 @@ export default function TaskView()
     React.useEffect(() => {
         navigation.setOptions({
           title: title,
-          headerStyle: { backgroundColor: '#41644A' },
+          headerStyle: { backgroundColor: '#7C96AB' },
           headerTitleStyle: {
             fontWeight: "bold",
           },
@@ -37,7 +37,7 @@ export default function TaskView()
       
 
 
-
+      //Delets the sub tasks -> different end points
       async  function Delete (name)
       {
         const idToken = await auth.currentUser.getIdToken;
@@ -60,14 +60,14 @@ export default function TaskView()
     
       };
     
-    
+
       //this is the the delete button
       const renderRightActions = (index , name) => {
         return (
           <TouchableOpacity
             style={styles.deleteButton}
             onPress={() => handleDelete(index , name)}  >
-             <Image source={deleteIcon} style={{ width: 40, height: 40, top:100 }} />       
+             <Image source={deleteIcon} style={{ width: 50, height: 50, top:100 }} />       
           </TouchableOpacity>
         );
       };
@@ -117,7 +117,7 @@ export default function TaskView()
             renderRightActions={() => renderRightActions(index , item.name)}
           >  
            
-        <Card style = {{...styles.cardContainer , backgroundColor: generateRandomColor()} }  key={index} onPress={() => {
+        <Card style = {{...styles.cardContainer , backgroundColor: generateRandomColor() , elevation:3} }  key={index} onPress={() => {
         }}>
         <Card.Content>
          <Text style={styles.cardTitle}>{item.name}</Text>
@@ -141,7 +141,7 @@ const styles=   StyleSheet.create(
 container:{
 
     flex:1 ,
-    backgroundColor: "#fff",
+    backgroundColor: "#B7B7B7",
     alignItems : 'center',
     justifyContent:'center',
 },

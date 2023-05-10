@@ -62,7 +62,7 @@ export default function App() {
           title: "",
 
           animation: "slide_from_right",
-          headerStyle: { backgroundColor: "#41644A" },
+          headerStyle: { backgroundColor: "black" },
          headerBackVisible:false,
         
         }}
@@ -80,7 +80,7 @@ export default function App() {
         <Stack.Screen
           name="TaskView"
           component={TaskView}
-          options={{ animation: "fade" }}
+          options={{ animation: "fade" , headerStyle :{}}}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -6,6 +6,7 @@ import * as firebaseAuth from 'firebase/auth'
 import { firebaseAppStore } from "../Controller/UserController";
 import CategoryTaskIcon from "../assets/CreateTask.png";
 import HomeIcon from "../assets/HomeIcon.jpg";
+import { useNavigation } from "@react-navigation/native";
 
 
 //CATEGORY CREATE PAGE
@@ -14,7 +15,7 @@ export default function CategoryCreate()
 {
     const[text , SetText] = React.useState('');
     const auth =  firebaseAuth.getAuth(firebaseAppStore.getState().currentApp);
-   
+   const navigate = useNavigation();
 
 
     async function AddCategoriesFireBase()
@@ -34,6 +35,8 @@ export default function CategoryCreate()
     
       PatchData(body , headers , auth.currentUser , text);
       Alert.alert("Category added")
+      navigate.navigate("HomeScreen")
+      
 
     }
 
