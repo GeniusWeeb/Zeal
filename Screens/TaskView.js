@@ -7,6 +7,11 @@ import * as firebaseAuth from 'firebase/auth';
 import { firebaseAppStore } from "../Controller/UserController";
 import React from "react";
 import { useState } from "react";
+import { Card } from "react-native-paper";
+
+
+
+
 export default function TaskView()
 {
     //THIS PAGE COMES WHEN YOU CLICK INDIVIDUAL CATEGORIES
@@ -48,23 +53,30 @@ export default function TaskView()
       
         return unsubscribe;
       }, [navigation]);
-    
+      
 
+
+      //Generate differnt card colour eveyrtime and changing its alpha to make it a bit more subtle
+      const generateRandomColor = () => {
+        const randomColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)},0.1)`;
+        return "#" + randomColor;
+      };
     return (
 
         <View style = {styles.container}>
           <View style={[ { marginTop: 10 }]}>
         </View>
-     <ScrollView>
+     <ScrollView showsVerticalScrollIndicator ={false}  alwaysBounceVertical = {false} >
+
         {subTasks.map((item, index) => (
-        <TouchableOpacity key={index} onPress={() => {
+        <Card style = {{...styles.cardContainer , backgroundColor: generateRandomColor()} }  key={index} onPress={() => {
         }}>
-        <View style={styles.button}>
-         <Text style={styles.buttonText}>{item}</Text>
-        </View>
+        <Card.Content>
+         <Text style={styles.cardTitle}>{item}</Text>
+        </Card.Content>
         <View style={[ { marginTop: 10 }]}>
         </View>
-        </TouchableOpacity>     
+        </Card>     
       ))}
     </ScrollView>
         <StatusBar style="auto"/> 
@@ -101,4 +113,35 @@ button: {
     fontSize: 16,
     fontWeight: '900',
   },
+  cardContainer: {
+    width: 300,
+    height: 300,
+   
+    borderRadius: 5,
+    elevation: 5,
+    alignSelf: 'center',
+    marginBottom: 10,
+    padding: 10,
+
+    borderWidth: 2,
+    borderColor: 'grey',
+
+   marginVertical: 10,
+   marginHorizontal: 20,
+   
+  },
+  cardTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 2,
+    elevation: 3,
+  },
+  cardText: {
+    fontSize: 16,
+    marginVertical: 10,
+  },
+
+
 });
