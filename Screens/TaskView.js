@@ -10,7 +10,7 @@ import { useState } from "react";
 import { Card } from "react-native-paper";
 import deleteIcon from "../assets/delete.png"
 import { Swipeable } from "react-native-gesture-handler";
-
+import CountDown from "react-native-countdown-component"
 
 
 
@@ -121,7 +121,19 @@ export default function TaskView()
         }}>
         <Card.Content>
          <Text style={styles.cardTitle}>{item.name}</Text>
+         <View style={[ { marginTop:5}]}>
+         </View>
          <Text style = {styles.cardText}>{item.task_info} </Text>
+         <View style={[ { marginTop: 5}]}>
+         </View>
+         <Text style = {styles.cardText}>{item.time} </Text>
+         <View style={[ { marginTop:0}]}>
+         </View>
+         <CountDown  digitStyle = {{backgroundColor :"yellow" }} timeLabelStyle= {{fontSize:14 ,fontWeight:"bold" }}
+        until={ Math.round((new Date(item.time).getTime() - new Date().getTime())/1000)} 
+        size={30}
+        onFinish={() => alert('Event over !!')}
+      />
         </Card.Content>
         <View style={[ { marginTop: 10 }]}>
         </View>
@@ -143,7 +155,8 @@ container:{
     flex:1 ,
     backgroundColor: "#B7B7B7",
     alignItems : 'center',
-    justifyContent:'center',
+    justifyContent:'space-evenly',
+
 },
 button: {
     width: 300,
