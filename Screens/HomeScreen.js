@@ -58,7 +58,6 @@ export default function HomeScreen()
   }, [navigation]);
 
 
-
   async  function Delete (name)
   {
     const idToken = await auth.currentUser.getIdToken;

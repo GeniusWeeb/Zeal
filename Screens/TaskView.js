@@ -104,6 +104,10 @@ export default function TaskView()
         const randomColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)},0.1)`;
         return "#" + randomColor;
       };
+      const generateRandomColorTime = () => {
+        const randomColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)},0.7)`;
+        return "#" + randomColor;
+      };
     return (
 
         <View style = {styles.container}>
@@ -121,21 +125,21 @@ export default function TaskView()
         }}>
         <Card.Content>
          <Text style={styles.cardTitle}>{item.name}</Text>
-         <View style={[ { marginTop:5}]}>
-         </View>
-         <Text style = {styles.cardText}>{item.task_info} </Text>
-         <View style={[ { marginTop: 5}]}>
-         </View>
-         <Text style = {styles.cardText}>{item.time} </Text>
          <View style={[ { marginTop:0}]}>
          </View>
-         <CountDown  digitStyle = {{backgroundColor :"yellow" }} timeLabelStyle= {{fontSize:14 ,fontWeight:"bold" }}
+         <Text style = {styles.cardText}>{item.task_info} </Text>
+         <View style={[ { marginTop: 0}]}>
+         </View>
+         <Text style = {styles.cardText}>Deadline Date :  {item.time} </Text>
+         <View style={[ { marginTop:0}]}>
+         </View>
+         <CountDown  digitStyle = {{backgroundColor : generateRandomColorTime() }} timeLabelStyle= {{fontSize:14 ,fontWeight:"bold" }}
         until={ Math.round((new Date(item.time).getTime() - new Date().getTime())/1000)} 
         size={30}
         onFinish={() => alert('Event over !!')}
       />
         </Card.Content>
-        <View style={[ { marginTop: 10 }]}>
+        <View style={[ { marginTop: 2 }]}>
         </View>
         </Card>     
         </Swipeable>
