@@ -92,7 +92,7 @@ export default function SubTaskCreate()
                         placeholder="Select Task Category"    
                         boxStyles={{ alignContent:"center",backgroundColor :"#9F8772" , elevation:"20" }}
                         
-                        dropdownTextStyles={{color:"black", fontWeight:900}}
+                        dropdownTextStyles={{color:"black", fontWeight:900 , fontSize:17}}
                         dropdownItemStyles={{alignItems:"center",direction:"inherit"}}                 
                         disabledItemStyles={{marginHorizontal:20}}
                         inputStyles={{fontSize:20}}

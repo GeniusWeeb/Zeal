@@ -30,7 +30,9 @@ export default function TaskView()
           title: title,
           headerStyle: { backgroundColor: '#7C96AB' },
           headerTitleStyle: {
-            fontWeight: "bold",
+            fontWeight: "900",
+            fontSize:25,
+           
           },
         });
       }, [title]);
