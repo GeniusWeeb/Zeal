@@ -29,6 +29,8 @@ export default function App() {
       <Text style={styles.font}>ZEAL</Text>
     );
   }
+
+  
  
 
   return (
@@ -68,12 +70,12 @@ export default function App() {
         <Stack.Screen
           name="CategoryCreate"
           component={CategoryCreate}
-          options={{ title: "Create your Categories", animation: "fade" }}
+          options={{ title: "Categories sections", animation: "fade" ,headerStyle :{ backgroundColor:"black"} , headerTitleStyle : {color : "white" , fontWeight:"900"}, headerLeft: () => <Logo/>  }}
         />
         <Stack.Screen
           name="SubTaskCreate"
           component={SubTaskCreate}
-          options={{ title: "Create your SubPlans", animation: "slide_from_right" }}
+          options={{ title: "Create Subplans", animation: "slide_from_right" , headerStyle :{ backgroundColor:"black"} , headerTitleStyle : {color : "pink" , fontWeight:"900"}, headerLeft: () => <Logo/>} }
         />
         <Stack.Screen
           name="TaskView"
