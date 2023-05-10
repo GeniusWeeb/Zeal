@@ -1,10 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet , Text , View  , Alert , TextInput, TouchableOpacity} from "react-native";
+import { StyleSheet , Text , View  , Alert , TextInput, TouchableOpacity, Button} from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import * as firebaseAuth from 'firebase/auth'
 import { firebaseAppStore } from "../Controller/UserController";
 import { GetCategories, PatchData } from "../Controller/DatabaseController";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default function SubTaskCreate()
 {
@@ -18,6 +19,23 @@ export default function SubTaskCreate()
       const nameInputRef = React.useRef(null);
       const descriptionInputRef = React.useRef(null);
       const dropDownRef = React.useRef(null);
+      const [mydate ,SetDate] =React.useState(null);
+      const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false);
+
+      const showDatePicker = () => {
+        setDatePickerVisibility(true);
+      };
+    
+      const hideDatePicker = () => {
+        setDatePickerVisibility(false);
+      };
+    
+      const handleConfirm = (date) => {
+       const dat =  date.toLocaleDateString()
+        SetDate(dat);
+        hideDatePicker();         
+      };
+    
       //dont give a dependancy so that it runs when the component mounts
       // We will use this to load data from Firebase
       React.useEffect( (
@@ -45,7 +63,8 @@ export default function SubTaskCreate()
         });
         const data = {   
             "name" : `${name}`,
-            "task_info" : `${descrip}`,     
+            "task_info" : `${descrip}`,  
+            "time":  `${mydate}`   
         } 
         const body = JSON.stringify(data);
         //name is the linking key 
@@ -88,9 +107,21 @@ export default function SubTaskCreate()
         </View>
         <TextInput style={styles.input}  onChangeText={SetDescription} value={descrip}
         placeholder="Enter Task description"  placeholderTextColor="#394867"  keyboardType="default"  ref={descriptionInputRef}/>
-        <View style={[ { marginTop: 300}]}>
+          <View style={[ { marginTop: 25}]}>
         </View>
-    <TouchableOpacity onPress={() =>{
+        <Button title="Show Date Picker" onPress={showDatePicker} />
+    
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleConfirm}
+        onCancel={hideDatePicker}
+        display="inline"
+              
+      />
+        <View style={[ { marginTop: 220}]}>
+        </View>
+      <TouchableOpacity onPress={() =>{
         if(name && descrip)
          {   
             AddSubCategoriesToFireBase();
