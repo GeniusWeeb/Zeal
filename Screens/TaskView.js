@@ -53,6 +53,8 @@ export default function TaskView()
     return (
 
         <View style = {styles.container}>
+          <View style={[ { marginTop: 10 }]}>
+        </View>
      <ScrollView>
         {subTasks.map((item, index) => (
         <TouchableOpacity key={index} onPress={() => {

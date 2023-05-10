@@ -40,7 +40,7 @@ export default function CategoryCreate()
     return (
       <View style = {styles.container}>  
        <TextInput style={styles.input}  onChangeText={SetText} value={text}
-        placeholder="Enter text here"  placeholderTextColor="#aaa"  keyboardType="default"
+        placeholder="Enter Category name here"  placeholderTextColor="#aaa"  keyboardType="default"
       />
      <TouchableOpacity onPress={() => 
      {
@@ -75,7 +75,7 @@ container:{
 }, 
     input: {
     height: 100,
-    fontSize: 30,
+    fontSize: 20,
     fontWeight: '900',
     color: '#333',
     bottom:100

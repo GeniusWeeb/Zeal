@@ -53,7 +53,10 @@ export default function HomeScreen()
   return (    
     
     <View style = {styles.container}>
+    <View style={[ { marginTop: 10 }]}>
+        </View>
     <ScrollView>
+
         {category.length != 0 &&   category.map((item, index) => (
           <TouchableOpacity key={index} onPress={() => {
 
@@ -79,11 +82,12 @@ export default function HomeScreen()
         </View>
      </TouchableOpacity>  
     <View style={styles.footer}>
-      <Text>Footer content goes here</Text>
       <View style= {styles.footerButtons}>
         <Button title="Buton1"/>
         <Button title="Buton2"/>
-        <Button title="Button3"/>
+        <Button title="Create sub Tasks"   onPress={()=> {
+            navigation.navigate("SubTaskCreate")
+        }}  />
       </View>
     </View>
     <Text></Text> 
