@@ -11,6 +11,8 @@ import React from "react";
 import CategoryTaskIcon from "../assets/CreateTask.png";
 import CategoryCreateIcon from "../assets/CategoryCreate.png";
 import HomeIcon from "../assets/HomeIcon.jpg";
+import { Swipeable } from "react-native-gesture-handler";
+import deleteIcon from "../assets/delete.png"
 export default function HomeScreen()
 
 {   
@@ -53,27 +55,55 @@ export default function HomeScreen()
   
     return unsubscribe;
   }, [navigation]);
+
+  const handleDelete = (index) => {
+    const newCategory = [...category];
+    newCategory.splice(index, 1);
+    setCategory(newCategory);
+  };
+
+
+  //this is the the delete button
+  const renderRightActions = (index) => {
+    console.log(index)
+    return (
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={() => handleDelete(index)}  >
+         <Image source={deleteIcon} style={{ width: 40, height: 40, top:15 }} />       
+      </TouchableOpacity>
+    );
+  };
+
+
+
   return (    
     
     <View style = {styles.container}>
     <View style={[ { marginTop: 10 }]}>
         </View>
-    <ScrollView>
-        {category.length != 0 &&   category.map((item, index) => (
-          <TouchableOpacity key={index} onPress={() => {
-
-            if(!userStore.getState().isUserOnline)
-              return;
-            //for task view title
-            userStore.getState().SetCurrentUserCategory(item);     
-            navigation.navigate("TaskView" , { title: `${item}` })
-          }}>
-          <View style={styles.button}>
-          <Text style={styles.buttonText}>{item}</Text>
-          </View>
-          <View style={[ { marginTop: 10 }]}>
-          </View>
-          </TouchableOpacity>     
+        <ScrollView>
+        {category.map((item, index) => (
+          <Swipeable
+            key={index} 
+            renderRightActions={() => renderRightActions(index)}
+          >
+            <TouchableOpacity
+              style={styles.button}
+              //Here we add a slight delay , so we can differ between the swipe gesture
+              // and the button click , for button press we need to hold down the button
+              delayLongPress={200}
+              onLongPress={() => {
+                if (!userStore.getState().isUserOnline) return;
+                userStore.getState().SetCurrentUserCategory(item);
+                navigation.navigate('TaskView', { title: `${item}` });
+              }}
+            >
+              <Text style={styles.buttonText}>{item}</Text>
+            </TouchableOpacity>
+            <View style={[ { marginTop: 10 }]}>
+        </View>
+          </Swipeable>
         ))}
     </ScrollView>
     <StatusBar style="light"/> 
