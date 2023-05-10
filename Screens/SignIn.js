@@ -1,7 +1,7 @@
 import { firebaseAppStore } from '../Controller/UserController';
 import { StatusBar } from 'expo-status-bar';
 import * as WebBrowser from 'expo-web-browser'
-import { StyleSheet, Text, SafeAreaView, useColorScheme, Alert, Button, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, useColorScheme, Alert, Button, Image, TouchableOpacity, ScrollView , ImageBackground} from 'react-native';
 import * as Google from 'expo-auth-session/providers/google'
 import * as React from 'react';
 import * as firebaseApp from 'firebase/app'
@@ -13,6 +13,7 @@ import {  firebaseConfig, PatchData } from '../Controller/DatabaseController';
 import userStore,{ useAssignUserController, useUserController } from '../Controller/UserController';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useStore } from 'zustand';
+import googleIcon from "../assets/google.png"
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -136,14 +137,19 @@ export default function SignIn() {
  
 
   return (
-    <SafeAreaView style={styles.container}>  
-    {  < Button title=' Login' onPress={() => promptAsync()} />}
+    <ImageBackground source={require('../assets/splash.png')} style={styles.backgroundImage} > 
+    <Text> Welcome to zeal </Text>
+     <TouchableOpacity onPress={() => promptAsync()}>
+      <Image source={googleIcon} style={{ width: 90, height: 90, marginRight: 10 }} />
+    </TouchableOpacity>
       <Button title = "Offline access" onPress={()=> SetOfflineState()}/>
       <Button title = "Storage access" onPress={()=> GetStorageSize()}/>
-
-     
-    <StatusBar style="dark" />
-    </SafeAreaView>
+      <StatusBar style="dark" />
+      {/* <SafeAreaView style={styles.container}>  
+   
+   
+    </SafeAreaView> */}
+    </ImageBackground>
   );
 }
 
@@ -157,6 +163,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+    alignItems: 'center',
+}
 
 
 });

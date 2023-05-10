@@ -1,9 +1,12 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet , Text , View , TextInput, Button, TouchableOpacity} from "react-native";
+import { StyleSheet , Text , View , TextInput, Button, TouchableOpacity , Image} from "react-native";
 import { PatchData, PushData } from "../Controller/DatabaseController";
 import * as firebaseAuth from 'firebase/auth'
 import { firebaseAppStore } from "../Controller/UserController";
+import CategoryTaskIcon from "../assets/CreateTask.png";
+import HomeIcon from "../assets/HomeIcon.jpg";
+
 
 //CATEGORY CREATE PAGE
 
@@ -54,7 +57,8 @@ export default function CategoryCreate()
             <Text style={styles.buttonText}>Save</Text>
         </View>
     </TouchableOpacity>
-   
+    <View style={styles.footer}>
+    </View>
         <StatusBar style="auto"/> 
         </View>
     );
@@ -73,6 +77,19 @@ container:{
     alignItems : 'center',
     justifyContent:'center',
 }, 
+footer: {
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  right: 0,
+  backgroundColor: 'black',
+  alignItems: 'center',
+  justifyContent: 'space-evenly',
+  height:60,
+  width:400
+
+
+},
     input: {
     height: 100,
     fontSize: 20,

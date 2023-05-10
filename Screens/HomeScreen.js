@@ -8,6 +8,9 @@ import { firebaseAppStore } from "../Controller/UserController";
 import { CategoryStore } from "../Controller/UserController";
 import { useState } from "react";
 import React from "react";
+import CategoryTaskIcon from "../assets/CreateTask.png";
+import CategoryCreateIcon from "../assets/CategoryCreate.png";
+import HomeIcon from "../assets/HomeIcon.jpg";
 export default function HomeScreen()
 
 {   
@@ -56,7 +59,6 @@ export default function HomeScreen()
     <View style={[ { marginTop: 10 }]}>
         </View>
     <ScrollView>
-
         {category.length != 0 &&   category.map((item, index) => (
           <TouchableOpacity key={index} onPress={() => {
 
@@ -76,18 +78,18 @@ export default function HomeScreen()
     </ScrollView>
     <StatusBar style="light"/> 
 
-    <TouchableOpacity onPress={() => { navigation.navigate("CategoryCreate")}}>
-        <View style={styles.taskButtons} >
-            <Text style={styles.buttonText}>Create Task</Text>
-        </View>
-     </TouchableOpacity>  
     <View style={styles.footer}>
       <View style= {styles.footerButtons}>
-        <Button title="Buton1"/>
-        <Button title="Buton2"/>
-        <Button title="Create sub Tasks"   onPress={()=> {
-            navigation.navigate("SubTaskCreate")
-        }}  />
+     
+      <TouchableOpacity onPress={() =>  navigation.navigate("CategoryCreate")}>
+        <Image source={CategoryCreateIcon} style={{ width: 45, height: 40 , top:5}} />
+       </TouchableOpacity>
+       <TouchableOpacity onPress={() =>  navigation.navigate("HomeScreen")}>
+        <Image source={HomeIcon} style={{ width: 45, height: 40 , top:5}} />
+       </TouchableOpacity>  
+        <TouchableOpacity onPress={() =>   navigation.navigate("SubTaskCreate")}>
+        <Image source={CategoryTaskIcon} style={{ width: 50 , height: 50 , top:2}} />
+       </TouchableOpacity>
       </View>
     </View>
     <Text></Text> 
@@ -137,10 +139,12 @@ footer: {
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#263A29',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height:75,
+    backgroundColor: 'black',
+    alignItems: 'stretch',
+    justifyContent: 'space-evenly',
+    height:60,
+    width:400
+  
     
   },
   footerButtons: {
@@ -152,7 +156,7 @@ footer: {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#2A2F4F',
+    backgroundColor: 'black',
     height: 80,
     paddingHorizontal: 20,
     borderBottomWidth: 1,

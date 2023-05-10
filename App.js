@@ -4,10 +4,11 @@ import Profile from "./Screens/Profile";
 import SubTaskCreate from "./Screens/SubTaskCreate";
 import CategoryCreate from "./Screens/CategoryCreate";
 import TaskView from "./Screens/TaskView";
-import { Button, StyleSheet, Text } from "react-native";
+import { Button, StyleSheet, Text , TouchableOpacity, Image } from "react-native";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import userStore from "./Controller/UserController";
+import profileIcon from "./assets/profileIcon.png"
 
 const Stack = createNativeStackNavigator();
 
@@ -15,8 +16,11 @@ export default function App() {
 
   function ProfileButton() {
     const navigation = useNavigation(); // get navigation object
-    return (
-      <Button onPress={() => navigation.navigate("Profile")} title="Profile" />
+    return (     
+      <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+      <Image source={profileIcon} style={{ width: 35, height: 35, marginRight: 10 }} />
+    </TouchableOpacity>
+     
     );
   }
 
@@ -25,6 +29,7 @@ export default function App() {
       <Text style={styles.font}>ZEAL</Text>
     );
   }
+ 
 
   return (
     <NavigationContainer>
@@ -32,7 +37,7 @@ export default function App() {
         <Stack.Screen
           name="SignIn"
           component={SignIn}
-          options={{ title: "", headerBackVisible: false  , headerStyle :{ backgroundColor:"#393646"}}}
+          options={{ title: "", headerBackVisible: false  , headerStyle :{ backgroundColor:"black"} , headerLeft: () => <Logo/>}}
         />
         <Stack.Screen
           name="HomeScreen"
@@ -43,7 +48,7 @@ export default function App() {
             headerBackTitleVisible:false,
             animation: "fade",
             gestureEnabled: false,
-            headerStyle: { backgroundColor: "#263A29" },
+            headerStyle: { backgroundColor: "black" },
             headerRight: () => <ProfileButton />,
             headerLeft: () => <Logo/>
           }}
@@ -53,6 +58,7 @@ export default function App() {
         component={Profile}
         options={{
           title: "",
+
           animation: "slide_from_right",
           headerStyle: { backgroundColor: "#41644A" },
          headerBackVisible:false,
@@ -81,6 +87,8 @@ export default function App() {
 
 const styles = StyleSheet.create({
   font: {
-    fontWeight: "900"
+    fontWeight: "900",
+    color:"white",
+    left:16
   }
 });
