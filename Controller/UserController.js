@@ -86,6 +86,19 @@ export const CategoryStore = create(
             categories: category,
             lastUpdated : Date.now()
           })),
+          DeleteCategory: (index) =>
+          set((state) => ({
+          
+            categories: [
+              ...state.categories.slice(0, index),
+              ...state.categories.slice(index + 1)
+            ],
+            lastUpdated: Date.now()
+          })),
+           GetCategoryName:(index) => {
+            const categoryName = CategoryStore.getState().categories[index];
+            return categoryName ? categoryName : null;
+          }
          }),
        {
      name : "SavedCategoryStore",

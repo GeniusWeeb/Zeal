@@ -61,19 +61,19 @@ export async function GETDATA(body , headers , currentUser)
       console.log("Added data:", addedData);
   
 }
-
-export async function DeleteTaskCategory(body , headers , currentUser)
+      
+export async function DeleteTaskCategory( headers , currentUser ,categoryName)
 {
     // WE CAN AD APPENDED URL SECTIONS AND HAVE THEM SAVED and we can just operawte on the base url  that is upto 
     // the unique user id
-    const response =  await fetch(`https://zeal-383911-default-rtdb.europe-west1.firebasedatabase.app/users/${currentUser.uid}.json/TaskCategory` ,{
+    const response =  await fetch(`https://zeal-383911-default-rtdb.europe-west1.firebasedatabase.app/users/${currentUser.uid}/${categoryName}.json` ,{
         method: "DELETE" , 
         headers: headers,
-        body: body
+  
       });
       const addedData = await response.json();
       //response.json can be stored in => local storage and parsed directly to the UI elemtns
-      console.log("Added data:", addedData);
+      console.log("Removed data:", addedData);
   
 }
 

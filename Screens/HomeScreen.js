@@ -13,6 +13,7 @@ import CategoryCreateIcon from "../assets/CategoryCreate.png";
 import HomeIcon from "../assets/HomeIcon.jpg";
 import { Swipeable } from "react-native-gesture-handler";
 import deleteIcon from "../assets/delete.png"
+import { DeleteTaskCategory } from "../Controller/DatabaseController";
 export default function HomeScreen()
 
 {   
@@ -56,16 +57,36 @@ export default function HomeScreen()
     return unsubscribe;
   }, [navigation]);
 
+
+
+  async  function Delete (name)
+  {
+    const idToken = await auth.currentUser.getIdToken;
+    // set up the request headers, including the Firebase ID token in the Authorization header
+    const headers = new Headers({
+      "Authorization": `Bearer ${idToken}`,
+      "Content-Type": "application/json"
+    });
+
+    DeleteTaskCategory(headers, auth.currentUser,name);
+
+  }
   const handleDelete = (index) => {
-    const newCategory = [...category];
-    newCategory.splice(index, 1);
-    setCategory(newCategory);
+    //Adding a guard clause so we prevent any actions in offline state
+    let name = CategoryStore.getState() .GetCategoryName(index) ;
+    if(!isOnline ||  name == null)return;    
+     const newCategory = [...category];
+     newCategory.splice(index, 1);
+     setCategory(newCategory);
+     CategoryStore.getState().DeleteCategory(index);
+     Delete(name);
+
+
   };
 
 
   //this is the the delete button
   const renderRightActions = (index) => {
-    console.log(index)
     return (
       <TouchableOpacity
         style={styles.deleteButton}
