@@ -73,18 +73,18 @@ export async function DeleteTaskCategory( headers , currentUser ,categoryName)
       });
       const addedData = await response.json();
       //response.json can be stored in => local storage and parsed directly to the UI elemtns
+
   
 }
 
-export async function DeleteSubTasks(body , headers , currentUser)
+export async function DeleteSubTasks(  headers , currentUser , categoryName , taskName)
 {
     // WE CAN AD APPENDED URL SECTIONS AND HAVE THEM SAVED and we can just operawte on the base url  that is upto 
     //note => replace tasl_name => specifc subtask name
     // the unique user id
-    const response =  await fetch(`https://zeal-383911-default-rtdb.europe-west1.firebasedatabase.app/users/${currentUser.uid}/TaskCategory/task_name.json` ,{
+    const response =  await fetch(`https://zeal-383911-default-rtdb.europe-west1.firebasedatabase.app/users/${currentUser.uid}/${categoryName}/names/${taskName}.json` ,{
         method: "DELETE" , 
         headers: headers,
-        body: body
       });
       const addedData = await response.json();
       //response.json can be stored in => local storage and parsed directly to the UI elemtns

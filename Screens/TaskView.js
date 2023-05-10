@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet , Text , View , ScrollView , TouchableOpacity } from "react-native";
-import {  GetSubCategories } from "../Controller/DatabaseController";
+import { StyleSheet , Text , View , ScrollView , TouchableOpacity  ,Image} from "react-native";
+import {  DeleteSubTasks, GetSubCategories } from "../Controller/DatabaseController";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import * as firebaseAuth from 'firebase/auth';
@@ -8,6 +8,9 @@ import { firebaseAppStore } from "../Controller/UserController";
 import React from "react";
 import { useState } from "react";
 import { Card } from "react-native-paper";
+import deleteIcon from "../assets/delete.png"
+import { Swipeable } from "react-native-gesture-handler";
+
 
 
 
@@ -32,6 +35,44 @@ export default function TaskView()
         });
       }, [title]);
       
+
+
+
+      async  function Delete (name)
+      {
+        const idToken = await auth.currentUser.getIdToken;
+        // set up the request headers, including the Firebase ID token in the Authorization header
+        const headers = new Headers({
+          "Authorization": `Bearer ${idToken}`,
+          "Content-Type": "application/json"
+        });
+    
+        DeleteSubTasks(headers, auth.currentUser,title,name);
+    
+      }
+      const handleDelete = (index , name) => {
+        //Adding a guard clause so we prevent any actions in offline state
+         const newCategory = [...subTasks];
+         newCategory.splice(index, 1);
+         SetTaskData(newCategory);
+         Delete(name);
+    
+    
+      };
+    
+    
+      //this is the the delete button
+      const renderRightActions = (index , name) => {
+        return (
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={() => handleDelete(index , name)}  >
+             <Image source={deleteIcon} style={{ width: 40, height: 40, top:100 }} />       
+          </TouchableOpacity>
+        );
+      };
+    
+    
     
       React.useEffect(() => {
         const unsubscribe = navigation.addListener('state', (event) => {
@@ -41,12 +82,14 @@ export default function TaskView()
             let subCategories = []
             // Fetch categories here
             GetSubCategories(auth.currentUser,title ).then((result) => {
-              for (let prop in result) {
-                    {
-                    
-                     subCategories.push(`${prop}`)
-                    }
-              }   
+              
+              for( let item   in result)
+                {
+                
+                
+                  subCategories.push(result[item])
+                }
+
               SetTaskData(subCategories);
              
             })
@@ -68,16 +111,22 @@ export default function TaskView()
         </View>
      <ScrollView showsVerticalScrollIndicator ={false}  alwaysBounceVertical = {false} >
         
-        {subTasks.map((item, index) => (      
+        {subTasks.map((item, index) => (   
+            <Swipeable
+            key={index} 
+            renderRightActions={() => renderRightActions(index , item.name)}
+          >  
+           
         <Card style = {{...styles.cardContainer , backgroundColor: generateRandomColor()} }  key={index} onPress={() => {
         }}>
         <Card.Content>
-         <Text style={styles.cardTitle}>{item}</Text>
-         <Text style = {styles.cardText}> this is a small description </Text>
+         <Text style={styles.cardTitle}>{item.name}</Text>
+         <Text style = {styles.cardText}>{item.task_info} </Text>
         </Card.Content>
         <View style={[ { marginTop: 10 }]}>
         </View>
         </Card>     
+        </Swipeable>
       ))}
     </ScrollView>
         <StatusBar style="auto"/> 
@@ -124,8 +173,8 @@ button: {
     marginBottom: 10,
     padding: 10,
 
-    borderWidth: 2,
-    borderColor: 'grey',
+//   borderWidth: 2,
+    //borderColor: 'grey',
 
    marginVertical: 10,
    marginHorizontal: 20,
@@ -142,6 +191,8 @@ button: {
   cardText: {
     fontSize: 16,
     marginVertical: 10,
+    fontWeight:"700",
+    color:"black"
   },
 
 
