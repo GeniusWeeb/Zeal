@@ -73,7 +73,6 @@ export async function DeleteTaskCategory( headers , currentUser ,categoryName)
       });
       const addedData = await response.json();
       //response.json can be stored in => local storage and parsed directly to the UI elemtns
-      console.log("Removed data:", addedData);
   
 }
 

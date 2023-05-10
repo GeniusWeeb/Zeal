@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet , Text , View , TextInput, Button, TouchableOpacity , Image} from "react-native";
+import { StyleSheet , Text , View , TextInput, Button, TouchableOpacity , Image , Alert} from "react-native";
 import { PatchData, PushData } from "../Controller/DatabaseController";
 import * as firebaseAuth from 'firebase/auth'
 import { firebaseAppStore } from "../Controller/UserController";
@@ -26,14 +26,14 @@ export default function CategoryCreate()
           "Content-Type": "application/json"
         });
 
-        const data = {   
-          
+        const data = {           
             "names": ""
         }
 
         body = JSON.stringify(data);
     
       PatchData(body , headers , auth.currentUser , text);
+      Alert.alert("Category added")
 
     }
 
