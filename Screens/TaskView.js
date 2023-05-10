@@ -37,16 +37,18 @@ export default function TaskView()
         const unsubscribe = navigation.addListener('state', (event) => {
           // Check if the current screen is HomeScreen
           if (event.data.state.routes[event.data.state.index].name === 'TaskView') {
-            console.log("in the page")
+            
             let subCategories = []
             // Fetch categories here
             GetSubCategories(auth.currentUser,title ).then((result) => {
               for (let prop in result) {
                     {
+                    
                      subCategories.push(`${prop}`)
                     }
               }   
               SetTaskData(subCategories);
+             
             })
           }
         });
@@ -54,8 +56,6 @@ export default function TaskView()
         return unsubscribe;
       }, [navigation]);
       
-
-
       //Generate differnt card colour eveyrtime and changing its alpha to make it a bit more subtle
       const generateRandomColor = () => {
         const randomColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)},0.1)`;
@@ -64,15 +64,16 @@ export default function TaskView()
     return (
 
         <View style = {styles.container}>
-          <View style={[ { marginTop: 10 }]}>
+         <View style={[ { marginTop: 10 }]}>
         </View>
      <ScrollView showsVerticalScrollIndicator ={false}  alwaysBounceVertical = {false} >
-
-        {subTasks.map((item, index) => (
+        
+        {subTasks.map((item, index) => (      
         <Card style = {{...styles.cardContainer , backgroundColor: generateRandomColor()} }  key={index} onPress={() => {
         }}>
         <Card.Content>
          <Text style={styles.cardTitle}>{item}</Text>
+         <Text style = {styles.cardText}> this is a small description </Text>
         </Card.Content>
         <View style={[ { marginTop: 10 }]}>
         </View>
@@ -134,8 +135,8 @@ button: {
     fontSize: 20,
     fontWeight: 'bold',
     textShadowColor: 'rgba(0, 0, 0, 0.3)',
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 2,
+    textShadowOffset: { width: 1, height: 2},
+    textShadowRadius: 1,
     elevation: 3,
   },
   cardText: {
