@@ -49,11 +49,9 @@ export default function CategoryCreate()
         placeholder="Enter Category name here"  placeholderTextColor="#aaa"  keyboardType="default"
       />
      <TouchableOpacity onPress={() => 
-     {
-        if(text)
-            {
-                endPoint =  text;
-            }
+     {  
+      if(!text) return;      
+       endPoint =  text;          
         AddCategoriesFireBase();
      }}>
         <View style={styles.button}>
@@ -76,7 +74,7 @@ const styles=   StyleSheet.create(
 container:{
 
     flex:1 ,
-    backgroundColor: "#fff",
+    backgroundColor: "#D6E4E5",
     alignItems : 'center',
     justifyContent:'center',
 }, 
@@ -97,13 +95,13 @@ footer: {
     height: 100,
     fontSize: 20,
     fontWeight: '900',
-    color: '#333',
+    color: '#497174',
     bottom:100
   },
   button: {
     width: 120,
     height: 60,
-    backgroundColor: '#988980',
+    backgroundColor: '#497174',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -111,7 +109,7 @@ footer: {
     bottom: 100
   },
   buttonText: {
-    color: '#fff',
+    color: 'white',
     fontSize: 16,
     fontWeight: '900',
   },

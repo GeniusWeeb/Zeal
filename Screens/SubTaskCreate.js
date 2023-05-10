@@ -18,11 +18,12 @@ export default function SubTaskCreate()
       const[descrip , SetDescription] = React.useState('');
       const nameInputRef = React.useRef(null);
       const descriptionInputRef = React.useRef(null);
-      const dropDownRef = React.useRef(null);
+      const dateRef = React.useRef(null);
       const [mydate ,SetDate] =React.useState(null);
       const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false);
 
       const showDatePicker = () => {
+       
         setDatePickerVisibility(true);
       };
     
@@ -74,6 +75,7 @@ export default function SubTaskCreate()
         SetDescription("")
         nameInputRef.current.clear();
         descriptionInputRef.current.clear();
+      
     }
 
 //This is a subtask -> this will create name , more detail descriptions , maybe a user Defined time ,Idk about a progress bar
@@ -88,8 +90,9 @@ export default function SubTaskCreate()
                         <SelectList data={fetchedData} setSelected={setTaskSelected} 
                         search = {false}
                         placeholder="Select Task Category"    
-                        boxStyles={{ alignContent:"center",backgroundColor :"#394867" , elevation:"20" }}
-                        //dropdownTextStyles={{color:"white"}}
+                        boxStyles={{ alignContent:"center",backgroundColor :"#9F8772" , elevation:"20" }}
+                        
+                        dropdownTextStyles={{color:"black", fontWeight:900}}
                         dropdownItemStyles={{alignItems:"center",direction:"inherit"}}                 
                         disabledItemStyles={{marginHorizontal:20}}
                         inputStyles={{fontSize:20}}
@@ -109,7 +112,11 @@ export default function SubTaskCreate()
         placeholder="Enter Task description"  placeholderTextColor="#394867"  keyboardType="default"  ref={descriptionInputRef}/>
           <View style={[ { marginTop: 25}]}>
         </View>
-        <Button title="Show Date Picker" onPress={showDatePicker} />
+        <Button title="Show Date Picker" onPress={    showDatePicker} /> 
+        <View style={[ { marginTop: 20}]}>
+        </View>
+        <Text  ref={dateRef} style = {styles.input}> {mydate}  </Text>
+       
     
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
@@ -119,7 +126,7 @@ export default function SubTaskCreate()
         display="inline"
               
       />
-        <View style={[ { marginTop: 220}]}>
+        <View style={[ { marginTop: 200}]}>
         </View>
       <TouchableOpacity onPress={() =>{
         if(name && descrip)

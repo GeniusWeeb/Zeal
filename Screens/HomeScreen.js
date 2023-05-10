@@ -14,6 +14,7 @@ import HomeIcon from "../assets/HomeIcon.jpg";
 import { Swipeable } from "react-native-gesture-handler";
 import deleteIcon from "../assets/delete.png"
 import { DeleteTaskCategory } from "../Controller/DatabaseController";
+import { Card } from "react-native-paper";
 export default function HomeScreen()
 
 {   
@@ -25,7 +26,10 @@ export default function HomeScreen()
     const [category, setCategory] = useState([]);
     const  isOnline =  userStore.getState().isUserOnline? true: false ;
 
-  
+    const generateRandomColor = () => {
+      const randomColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)},0.2)`;
+      return "#" + randomColor;
+    };
   React.useEffect ( () => {
     setCategory(CategoryStore.getState().categories);
   } , [CategoryStore.getState().categories])
@@ -95,19 +99,20 @@ export default function HomeScreen()
     );
   };
 
-
-
   return (    
     
     <View style = {styles.container}>
     <View style={[ { marginTop: 10 }]}>
         </View>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator ={false}  alwaysBounceVertical = {false}>
         {category.map((item, index) => (
           <Swipeable
             key={index} 
             renderRightActions={() => renderRightActions(index)}
           >
+              <Card style = {{...styles.cardContainer , backgroundColor: generateRandomColor() , elevation:3} }  key={index} onPress={() => {
+        }}>
+        <Card.Content>
             <TouchableOpacity
               style={styles.button}
               //Here we add a slight delay , so we can differ between the swipe gesture
@@ -121,9 +126,13 @@ export default function HomeScreen()
             >
               <Text style={styles.buttonText}>{item}</Text>
             </TouchableOpacity>
-            <View style={[ { marginTop: 10 }]}>
+         
+        </Card.Content>
+        </Card>
+        <View style={[ { marginTop: 10 }]}>
         </View>
-          </Swipeable>
+        </Swipeable>
+          
         ))}
     </ScrollView>
     <StatusBar style="light"/> 
@@ -155,7 +164,7 @@ const styles=   StyleSheet.create(
 container:{
 
     flex:1 ,
-    backgroundColor: "#41644A",
+    backgroundColor: "#434242",
     alignItems : 'center',
     justifyContent:'space-evenly',
 },
@@ -226,8 +235,8 @@ footer: {
   button: {
     width: 300,
     height: 60,
-    backgroundColor: '#E86A33',
-    borderRadius: 50,
+    backgroundColor: '#00000',
+    borderRadius: 100,
     justifyContent: 'center',
     alignItems: 'center',
     fontWeight: '900',
@@ -238,12 +247,17 @@ footer: {
   },
   buttonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 22,
     fontWeight: '900',
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 1, height: 2},
+    textShadowRadius: 1,
+    elevation: 3,
   },
   box: {
     backgroundColor: 'gray',
     padding: 20,
     borderRadius: 10,
   },
+  
 });

@@ -9,7 +9,7 @@ import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import userStore from "./Controller/UserController";
 import profileIcon from "./assets/profileIcon.png"
-
+import CreateTaskIcon from "./assets/CreateTask.png"
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -19,6 +19,16 @@ export default function App() {
     return (     
       <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
       <Image source={profileIcon} style={{ width: 35, height: 35, marginRight: 10 }} />
+    </TouchableOpacity>
+     
+    );
+  }
+
+  function SubTaskheader() {
+    const navigation = useNavigation(); // get navigation object
+    return (     
+      <TouchableOpacity onPress={() => navigation.navigate("SubTaskCreate")}>
+      <Image source={CreateTaskIcon} style={{ width: 35, height: 35, marginRight: 10 }} />
     </TouchableOpacity>
      
     );
@@ -80,7 +90,7 @@ export default function App() {
         <Stack.Screen
           name="TaskView"
           component={TaskView}
-          options={{ animation: "fade" , headerStyle :{}}}
+          options={{ animation: "fade"  ,headerRight: ()=> <SubTaskheader/>}}
         />
       </Stack.Navigator>
     </NavigationContainer>
