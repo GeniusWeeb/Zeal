@@ -39,7 +39,7 @@ export default function SubTaskCreate()
       };
     
       const handleConfirm = (date) => {
-       const dat =  date.toLocaleString()
+       const dat =  date.toLocaleString('en-US')
         SetDate(dat);
         hideDatePicker();         
       };
