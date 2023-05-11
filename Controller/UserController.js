@@ -21,9 +21,9 @@ const userStore = create(
   currentUserCredential:null,
   isUserOnline : false,
   isUserSignedIn: false,
-  userTaskCreated : 0 ,
-  userTaskFinished: 0 ,
-  userTaskDeleted : 0,
+  userTaskCreated : null ,
+  userTaskFinished: null ,
+  userTaskDeleted : null,
   lastUpdatedUser:Date.now(),
   assignUser: (user, app , credential) =>
     set((state) => ({
@@ -51,16 +51,16 @@ const userStore = create(
    isUserOnline: val,
   })),
 
-  UpdateUserTaskCreated: () => ((state) => ({
-    userTaskCreated : userTaskCreated + 1,
+  UpdateUserTaskCreated: () =>set ((state) => ({
+    userTaskCreated : state.userTaskCreated + 1,
     lastUpdated : Date.now(),
   })),
-  UpdateUserTaskFinished: () => ((state) => ({
-    userTaskFinished : userTaskFinished + 1,
+  UpdateUserTaskFinished: () => set((state) => ({
+    userTaskFinished : state.userTaskFinished + 1,
     lastUpdated : Date.now(),
   })),
-  UpdateUserTaskDeleted: () => ((state) => ({
-    userTaskDeleted : userTaskDeleted + 1,
+  UpdateUserTaskDeleted: () => set((state) => ({
+    userTaskDeleted : state.userTaskDeleted + 1,
     lastUpdated : Date.now(),
   }))
 

@@ -17,6 +17,7 @@ import googleIcon from "../assets/google.png"
 import offlineIcon from "../assets/Offline.png"
 import * as Notifications from 'expo-notifications';
 import { Permissions } from 'expo-notifications';
+import { PatchCounters } from '../Controller/DatabaseController';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -48,8 +49,6 @@ export default function SignIn() {
         iosClientId : "381324936027-bjbcdlp87kshmgntcf56bco0ltdfe13f.apps.googleusercontent.com",
         androidClientId : "381324936027-mnoj4t98j0elf7g7totb9bkjflv76om3.apps.googleusercontent.com"     
       });
-
-
 
 
       async function RegisterNotification()

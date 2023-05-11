@@ -54,7 +54,7 @@ export default function Profile()
             size={70}
             width={2}
             //1 * the item completed count
-            fill={1.2 * 5   }
+            fill={1.2 * userStore.getState().userTaskCreated + 5}
             tintColor="#00e0ff"
             onAnimationComplete={() => console.log('onAnimationComplete')}
             backgroundColor="#3d5875"         
@@ -62,7 +62,7 @@ export default function Profile()
           <AnimatedCircularProgress
             size={70}
             width={2}
-            fill={20}
+            fill={1.2 * userStore.getState().userTaskFinished + 5}
             tintColor="yellow"
             onAnimationComplete={() => console.log('onAnimationComplete')}
             backgroundColor="#3d5875"       
@@ -70,7 +70,7 @@ export default function Profile()
            <AnimatedCircularProgress
           size={70}
           width={2}
-          fill={20}
+          fill={1.2 * userStore.getState().userTaskDeleted + 5}
           tintColor="red"
           onAnimationComplete={() => console.log('onAnimationComplete')}
           backgroundColor="#3d5875"       
@@ -82,11 +82,11 @@ export default function Profile()
         <Text style = {{color:"white"}}>Task Deleted</Text>
         </View>
         <View style = {styles.TaskCount}>
-        <Text style = {{color:"white" , fontSize:20, fontWeight:"bold" , right:10}}>70</Text>
-        <Text style = {{color:"white", fontSize:20, fontWeight:"bold" ,}}>50</Text>  
-        <Text style = {{color:"white", fontSize:20, fontWeight:"bold" ,left:10}}>40</Text>
+        <Text style = {{color:"white" , fontSize:20, fontWeight:"bold" , right:15}}>{userStore.getState().userTaskCreated}</Text>
+        <Text style = {{color:"white", fontSize:20, fontWeight:"bold" ,}}>{userStore.getState().userTaskFinished}</Text>  
+        <Text style = {{color:"white", fontSize:20, fontWeight:"bold" ,left:15}}>{userStore.getState().userTaskDeleted}</Text>
         </View>
-        <TouchableOpacity  style = {{bottom:100}}  onPress={() => PerformSignOut()}>
+        <TouchableOpacity  style = {{bottom:150}}  onPress={() => PerformSignOut()}>
         <Image source={logoutIcon} style={{ width: 60, height: 60 ,  }} />
         <Text style ={{fontWeight:"bold", top:1, color:"white"}}>Logout</Text>
         </TouchableOpacity> 
@@ -169,13 +169,14 @@ TaskString :{
 TaskCount :{
   position: "absolute",
   flexDirection:"row",
-   //alignItems:"baseline",
+    //alignItems:"baseline",
    justifyContent:"space-evenly",
    bottom:115,
    marginBottom:0,
    flex:1,
    width:400,
    height:200, 
+  
 
 }
 });

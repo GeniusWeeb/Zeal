@@ -35,7 +35,9 @@ export default function CategoryCreate()
         });
 
         const data = {           
-            "names": ""
+            "names": "",
+
+            
         }
 
         body = JSON.stringify(data);

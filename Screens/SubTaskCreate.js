@@ -12,6 +12,7 @@
   import * as Notifications from 'expo-notifications';
   import { StartNotificationProcess } from "../Controller/NotificationController";
   import calendarIcon from "../assets/calendar.png"
+  import userStore from "../Controller/UserController";
 //#endregion
 
 export default function SubTaskCreate()
@@ -84,6 +85,9 @@ export default function SubTaskCreate()
         SetDescription("")
         nameInputRef.current.clear();
         descriptionInputRef.current.clear();
+        userStore.getState().UpdateUserTaskCreated();
+        console.log(userStore.getState().userTaskCreated)
+
             
     }
 //#region  Render Area

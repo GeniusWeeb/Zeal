@@ -16,6 +16,7 @@
     import { func } from "prop-types";
     import * as Notifications from 'expo-notifications';
     import { notificationThreshold } from "../Controller/UserController";
+    import userStore from "../Controller/UserController";
  //#endregion   
 
 export default function TaskView()
@@ -71,6 +72,8 @@ export default function TaskView()
          newCategory.splice(index, 1);
          SetTaskData(newCategory);
          Delete(name);
+         userStore.getState().  UpdateUserTaskDeleted();
+
     
     
       };
@@ -144,7 +147,8 @@ export default function TaskView()
                     <CountDown  digitStyle = {{backgroundColor : generateRandomColorTime() }} timeLabelStyle= {{fontSize:14 ,fontWeight:"bold" }}
                     until={ Math.round((new Date(item.time).getTime() - new Date().getTime())/1000)} 
                     size={30}
-                    onFinish={() => alert('Event over !!')}
+                    onFinish={() => { userStore.getState().UpdateUserTaskFinished()
+            }}
               />
                 </Card.Content>
                 <View style={[ { marginTop: 2 }]}>
