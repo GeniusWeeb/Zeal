@@ -156,6 +156,7 @@ footer: {
     textShadowOffset: { width: 1, height: 2},
     textShadowRadius: 1,
     elevation: 3,
+    color:"#4F4559"
   },
   cardText: {
     fontSize: 14,
