@@ -11,21 +11,31 @@ import { Card } from "react-native-paper";
 import deleteIcon from "../assets/delete.png"
 import { Swipeable } from "react-native-gesture-handler";
 import CountDown from "react-native-countdown-component"
-
-
-
+import { scheduleNotificationAsync } from "expo-notifications";
+import { func } from "prop-types";
+import * as Notifications from 'expo-notifications';
+import { notificationThreshold } from "../Controller/UserController";
 
 export default function TaskView()
 {
     //THIS PAGE COMES WHEN YOU CLICK INDIVIDUAL CATEGORIES
-
+    
     const route =  useRoute();
     const navigation = useNavigation();
     const { title } = route.params;
     const auth =  firebaseAuth.getAuth(firebaseAppStore.getState().currentApp);
     const[subTasks ,SetTaskData] = React.useState([]);
 
+    //Whenever this component mounts , we will clear any and all notifications that were schedules 
+    // and reschedule the notifications
+    //important use case or it creates bad clutter in the memory
+
+    //We can use this useEffect as well , Just clear the notifications
+  
     React.useEffect(() => {
+
+
+        Cancel();
         navigation.setOptions({
           title: title,
           headerStyle: { backgroundColor: '#7C96AB' },
@@ -36,9 +46,15 @@ export default function TaskView()
           },
         });
       }, [title]);
+
+      async function Cancel()
+      {
+        await Notifications.cancelAllScheduledNotificationsAsync().then((result) => {
+        console.log("Cleaned notification")
+        });
+      }
+
       
-
-
       //Delets the sub tasks -> different end points
       async  function Delete (name)
       {
@@ -61,9 +77,7 @@ export default function TaskView()
     
     
       };
-    
-
-      //this is the the delete button
+        //this is the the delete button
       const renderRightActions = (index , name) => {
         return (
           <TouchableOpacity
@@ -73,9 +87,7 @@ export default function TaskView()
           </TouchableOpacity>
         );
       };
-    
-    
-    
+
       React.useEffect(() => {
         const unsubscribe = navigation.addListener('state', (event) => {
           // Check if the current screen is HomeScreen
@@ -86,9 +98,7 @@ export default function TaskView()
             GetSubCategories(auth.currentUser,title ).then((result) => {
               
               for( let item   in result)
-                {
-                
-                
+                {              
                   subCategories.push(result[item])
                 }
 
@@ -100,6 +110,46 @@ export default function TaskView()
       
         return unsubscribe;
       }, [navigation]);
+
+
+
+      // this will shedule the checks but
+      //1 use case remains that is -> if at the time of scheduling you are already the given threshold then what?
+      //2 What if the task is deleted  thru its complete existnce 
+      //The Category is deleted -> We will have to search thru the scheduled notification in that case
+      async function ScheduleCustomNot(notyTime , item)
+      { 
+            await Notifications.scheduleNotificationAsync({    
+            content :{
+              title: `Hurry ${auth.currentUser.displayName}!`,
+              body: `Your task ${item.name} is about to end`
+            },
+            trigger:{
+              seconds:notyTime
+            }
+          }).then((result)=> {
+
+            console.log(`Added Notification ${item.name}`)
+          })
+
+      }
+
+
+      function tick(item)
+      {
+        const remainingTime =  Math.round((new Date(item.time).getTime() - new Date().getTime())/1000)
+        const showNoTiTime = remainingTime - notificationThreshold;
+        // if the time to show notificaion is small than the threshold value,it means 
+        //we dont have the time to get a full interval and so this can prevent noti appear in deletion case
+        if(showNoTiTime < notificationThreshold)
+          return ;
+         ScheduleCustomNot(showNoTiTime , item) ; 
+        //remaining time is in seconds 
+        //We wanna show notifications 30 minutes or eve 60 minutes before a certain task is about to get over
+        // remaining time ->->  0
+        //1 hour  =  3600seconds
+        // scheduleNotificationTime = remaining time  - 1 hour time
+      }
       
       //Generate differnt card colour eveyrtime and changing its alpha to make it a bit more subtle
       const generateRandomColor = () => {
@@ -117,16 +167,19 @@ export default function TaskView()
         </View>
      <ScrollView showsVerticalScrollIndicator ={false}  alwaysBounceVertical = {false} >
         
-        {subTasks.map((item, index) => (   
+         {
+              subTasks.map((item, index) => (   
+         
             <Swipeable
             key={index} 
             renderRightActions={() => renderRightActions(index , item.name)}
-          >  
-           
+            
+          >           
         <Card style = {{...styles.cardContainer , backgroundColor: generateRandomColor() , elevation:3} }  key={index} onPress={() => {
         }}>
         <Card.Content>
          <Text style={styles.cardTitle}>{item.name}</Text>
+         
          <View style={[ { marginTop:0}]}>
          </View>
          <Text style = {styles.cardText}>{item.task_info} </Text>
@@ -135,10 +188,12 @@ export default function TaskView()
          <Text style = {styles.cardText}>Deadline Date :  {item.time} </Text>
          <View style={[ { marginTop:0}]}>
          </View>
+         {tick(item)}
          <CountDown  digitStyle = {{backgroundColor : generateRandomColorTime() }} timeLabelStyle= {{fontSize:14 ,fontWeight:"bold" }}
         until={ Math.round((new Date(item.time).getTime() - new Date().getTime())/1000)} 
         size={30}
         onFinish={() => alert('Event over !!')}
+
       />
         </Card.Content>
         <View style={[ { marginTop: 2 }]}>

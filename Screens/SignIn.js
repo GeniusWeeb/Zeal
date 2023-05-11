@@ -14,6 +14,7 @@ import userStore,{ useAssignUserController, useUserController } from '../Control
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useStore } from 'zustand';
 import googleIcon from "../assets/google.png"
+import * as Notifications from 'expo-notifications';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -22,14 +23,22 @@ if (!firebaseApp.getApps().length) {
   firebaseAppStore.getState().AssignApp(  firebaseApp.initializeApp(firebaseConfig, "Zeal")); 
 }
 
-
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
 export default function SignIn() {
 
     const navigation = useNavigation(); 
     const app = firebaseAppStore.getState().currentApp;
     var auth =  firebaseAuth.getAuth(firebaseAppStore.getState().currentApp);
-   
     const [accessToken, setAccessToken] = React.useState(null);
+    const [notification ,SetNotification] =  React.useState(false)
+    const notificationListener = React.useRef();
+    const responseListener = React.useRef();
     var credential ; 
     const[user ,SetFinalUser] = React.useState(null);
     const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
@@ -70,10 +79,28 @@ export default function SignIn() {
 
       React.useEffect(()=>{
         console.log("Trying Silent Sign in")
-      },[userStore.getState().currentUserCredential]
-      
-      )
+      },[userStore.getState().currentUserCredential] )
 
+      React.useEffect(()=> {
+
+        //Here the apps recieved a notificaion we assign it
+      notificationListener.current = Notifications.addNotificationReceivedListener( notification => {
+        SetNotification(notification.request.content.body)
+      })
+
+
+
+      //the user now taps on the notification
+      responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+        console.log(response);})
+
+        //unsubscribing to the listeners
+        return () => {
+          Notifications.removeNotificationSubscription(notificationListener.current);
+          Notifications.removeNotificationSubscription(responseListener.current);
+        };
+
+      },[])
      
     async function SignInGoogle()
       {              
@@ -87,8 +114,7 @@ export default function SignIn() {
        
                 userStore.getState().assignUser(user,firebaseAppStore.getState().currentApp , credential);            
                 SetFinalUser(userStore.getState().currentUser);
-           
-               //navigation.navigate("HomeScreen");                    
+                           
               }}).catch
                 {console.log(e)}
                   
@@ -134,7 +160,17 @@ export default function SignIn() {
       console.log(`Current AsyncStorage size: ${totalSize} bytes`);
     }
 
- 
+    async function schedulePushNotification() {
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: "Your first Notification",
+          body: 'Welcome to Zeal , Track your goals with ease ! ',
+          data: { data: 'goes here' },
+        },
+        trigger: { seconds: 2 },
+      });
+    }
+    
 
   return (
     <ImageBackground source={require('../assets/splash.png')} style={styles.backgroundImage} > 
@@ -144,6 +180,12 @@ export default function SignIn() {
     </TouchableOpacity>
       <Button title = "Offline access" onPress={()=> SetOfflineState()}/>
       <Button title = "Storage access" onPress={()=> GetStorageSize()}/>
+      <Button
+        title="Press to schedule a notification"
+        onPress={async () => {
+          await schedulePushNotification();
+        }}
+      />
       <StatusBar style="dark" />
       {/* <SafeAreaView style={styles.container}>  
    

@@ -6,6 +6,8 @@ import * as firebaseAuth from 'firebase/auth'
 import { firebaseAppStore } from "../Controller/UserController";
 import { GetCategories, PatchData } from "../Controller/DatabaseController";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { notificationThreshold } from "../Controller/UserController";
+import * as Notifications from 'expo-notifications';
 
 export default function SubTaskCreate()
 {
@@ -25,6 +27,7 @@ export default function SubTaskCreate()
       const showDatePicker = () => {
        
         setDatePickerVisibility(true);
+      
       };
     
       const hideDatePicker = () => {
@@ -32,7 +35,7 @@ export default function SubTaskCreate()
       };
     
       const handleConfirm = (date) => {
-       const dat =  date.toLocaleDateString()
+       const dat =  date.toLocaleString()
         SetDate(dat);
         hideDatePicker();         
       };
@@ -51,6 +54,44 @@ export default function SubTaskCreate()
        
       })}, [])
 
+      async function ScheduleCustomNot(notyTime )
+      { 
+            await Notifications.scheduleNotificationAsync({    
+            content :{
+              title: `Hurry ${auth.currentUser.displayName}!`,
+              body: `Your task ${name} is about to end`
+            },
+            trigger:{
+              seconds:notyTime
+            }
+          }).then((result)=> {
+
+            console.log(`Added Notification ${name}`)
+            SetName("")
+            SetDescription("")
+            nameInputRef.current.clear();
+            descriptionInputRef.current.clear();
+          })
+
+      }
+
+
+      function tick()
+      {
+        const remainingTime =  Math.round((new Date(mydate).getTime() - new Date().getTime())/1000)
+        const showNoTiTime = remainingTime - notificationThreshold;
+        // if the time to show notificaion is small than the threshold value,it means 
+        //we dont have the time to get a full interval and so this can prevent noti appear in deletion case
+        if(showNoTiTime < notificationThreshold)
+          return ;
+         ScheduleCustomNot(showNoTiTime ) ; 
+        //remaining time is in seconds 
+        //We wanna show notifications 30 minutes or eve 60 minutes before a certain task is about to get over
+        // remaining time ->->  0
+        //1 hour  =  3600seconds
+        // scheduleNotificationTime = remaining time  - 1 hour time
+      }
+      
 
     //map this to button onpress
     async function AddSubCategoriesToFireBase()
@@ -71,10 +112,9 @@ export default function SubTaskCreate()
         //name is the linking key 
         const alterEndPoint = `${taskSelected}/names/${name}`;
         PatchData(body , headers , auth.currentUser , alterEndPoint);
-        SetName("")
-        SetDescription("")
-        nameInputRef.current.clear();
-        descriptionInputRef.current.clear();
+        tick()
+       
+        
       
     }
 
@@ -115,16 +155,14 @@ export default function SubTaskCreate()
         <Button title="Show Date Picker" onPress={    showDatePicker} /> 
         <View style={[ { marginTop: 20}]}>
         </View>
-        <Text  ref={dateRef} style = {styles.input}> {mydate}  </Text>
-       
-    
+        <Text  ref={dateRef} style = {styles.input}> {mydate}  </Text> 
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
-        mode="date"
+        mode="datetime"
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
         display="inline"
-              
+             
       />
         <View style={[ { marginTop: 200}]}>
         </View>

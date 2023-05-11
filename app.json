@@ -16,7 +16,11 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.bartoemus.zeal"
+      "bundleIdentifier": "com.bartoemus.zeal",
+      "infoPlist": {
+        "UIBackgroundModes": ["remote-notification"]
+      }
+      
     },
     "android": {
       "adaptiveIcon": {

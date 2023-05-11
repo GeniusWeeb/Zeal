@@ -3,6 +3,8 @@ import {createJSONStorage, persist} from 'zustand/middleware'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as firebaseAuth from 'firebase/auth';
 
+export const notificationThreshold  = 60 ;
+
 const userStore = create(
   persist
   (
