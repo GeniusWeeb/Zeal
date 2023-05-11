@@ -82,9 +82,9 @@ export default function Profile()
         <Text style = {{color:"white"}}>Task Deleted</Text>
         </View>
         <View style = {styles.TaskCount}>
-        <Text style = {{color:"white" , fontSize:20, fontWeight:"bold" , right:15 }}>{userStore.getState().userTaskCreated}</Text>
-        <Text style = {{color:"white", fontSize:20, fontWeight:"bold" ,}}>{userStore.getState().userTaskFinished}</Text>  
-        <Text style = {{color:"white", fontSize:20, fontWeight:"bold" ,left:15}}>{userStore.getState().userTaskDeleted}</Text>
+        <Text style = {{color:"white" , fontSize:20, fontWeight:"bold" , left:75 }}>{userStore.getState().userTaskCreated}</Text>
+        <Text style = {{color:"white", fontSize:20, fontWeight:"bold" ,left: 177}}>{userStore.getState().userTaskFinished}</Text>  
+        <Text style = {{color:"white", fontSize:20, fontWeight:"bold" ,left:273}}>{userStore.getState().userTaskDeleted}</Text>
         </View>
         <TouchableOpacity  style = {{bottom:150}}  onPress={() => PerformSignOut()}>
         <Image source={logoutIcon} style={{ width: 60, height: 60 ,  }} />
@@ -170,7 +170,7 @@ TaskCount :{
   position: "absolute",
   flexDirection:"row",
     //alignItems:"baseline",
-   justifyContent:"space-evenly",
+  
    bottom:115,
    marginBottom:0,
    flex:1,
