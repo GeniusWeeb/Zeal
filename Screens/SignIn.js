@@ -164,11 +164,11 @@ export default function SignIn() {
 
   return (
     <ImageBackground source={require('../assets/splash.jpg')} style={styles.backgroundImage} > 
-     <TouchableOpacity onPress={() => promptAsync()}>
-      <Image source={googleIcon} style={{ width: 150, height: 150, left: 40, top:184 }} />
+     <TouchableOpacity  style = {{ left: 40, top:184}} onPress={() => promptAsync()}>
+      <Image source={googleIcon} style={{ width: 150, height: 150 }} />
     </TouchableOpacity>
-      <TouchableOpacity onPress={() => SetOfflineState()}>
-      <Image source={offlineIcon} style={{ width: 75, height: 75, right: 50 , top:70 }} />
+      <TouchableOpacity style = {{ right: 50 , top:70 }}  onPress={() => SetOfflineState()}>
+      <Image source={offlineIcon} style={{ width: 75, height: 75}} />
     </TouchableOpacity>
       {/* <Button title = "Storage access" onPress={()=> GetStorageSize()}/> */}
       <StatusBar style="dark" />

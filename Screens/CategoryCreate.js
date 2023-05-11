@@ -72,8 +72,8 @@ export default function CategoryCreate()
                     <Text style={styles.cardTitle}>Quick tip</Text>
                     <View style={[ { marginTop:5}]}>
                     </View>
-                    <Text style = {styles.cardText}>Think of this as creating categories  in which you can add further tasks 
-                    for Eg , If we create a categoy deadline , we can add tasks like exam dates , project submission etc  </Text>
+                    <Text style = {styles.cardText}>Think of this as creating categories  in which you can add further tasks in the sub tasks section 
+                    for Eg , If we create a categoy deadline,we can add tasks like exam dates,project submission etc  </Text>
                     <View style={[ { marginTop:0}]}>
                     </View>
                 </Card.Content>
@@ -171,7 +171,7 @@ footer: {
     color:"#4F4559"
   },
   cardText: {
-    fontSize: 14,
+    fontSize: 13,
     marginVertical: 10,
     fontWeight:"700",
     color:"#4F4557"
