@@ -21,9 +21,9 @@ const userStore = create(
   currentUserCredential:null,
   isUserOnline : false,
   isUserSignedIn: false,
-  userTaskCreated : null ,
-  userTaskFinished: null ,
-  userTaskDeleted : null,
+  userTaskCreated : 0 ,
+  userTaskFinished: 0 ,
+  userTaskDeleted : 0,
   lastUpdatedUser:Date.now(),
   assignUser: (user, app , credential) =>
     set((state) => ({
@@ -40,9 +40,9 @@ const userStore = create(
       isUserSignedIn:false,
       currentUserApp:null,
       currentUserCredential:null ,
-      userTaskCreated : null ,
-      userTaskFinished: null ,
-      userTaskDeleted : null,
+      userTaskCreated : 0 ,
+      userTaskFinished: 0 ,
+      userTaskDeleted : 0,
 
     })),
   assignUserPicture: (uri) => set((state) => ({

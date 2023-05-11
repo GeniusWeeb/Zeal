@@ -61,7 +61,7 @@ export default function HomeScreen()
     });
   
     return unsubscribe;
-   }, [navigation]);
+   }, []);
 
 
   async  function Delete (name)

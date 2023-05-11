@@ -41,7 +41,7 @@ export async function PatchData(body , headers , currentUser , endPoint)
         headers: headers,
         body: body
       });
-      const addedData = await response.json();
+      return await response.json();
       console.log("Added data:", addedData);
   
 }
