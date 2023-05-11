@@ -10,6 +10,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import userStore from "./Controller/UserController";
 import profileIcon from "./assets/profileIcon.png"
 import CreateTaskIcon from "./assets/CreateTask.png"
+import goBack from "./assets/goBack.png"
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -69,11 +70,11 @@ export default function App() {
         name="Profile"
         component={Profile}
         options={{
-          title: "",
-
-          animation: "slide_from_right",
-          headerStyle: { backgroundColor: "black" },
-         headerBackVisible:false,
+        title: "",
+        animation: "slide_from_left",        
+        headerBackTitleVisible:true,
+        headerTransparent:true,
+        headerBackButtonMenuEnabled:false,
         
         }}
       />

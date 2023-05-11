@@ -111,7 +111,7 @@ export default function HomeScreen()
           <Swipeable
             key={index} 
             renderRightActions={() => renderRightActions(index)}
-          >
+          > 
               <Card style = {{...styles.cardContainer , backgroundColor: generateRandomColor() , elevation:3} }  key={index} onPress={() => {
         }}>
         <Card.Content>
@@ -120,7 +120,7 @@ export default function HomeScreen()
               //Here we add a slight delay , so we can differ between the swipe gesture
               // and the button click , for button press we need to hold down the button
               delayLongPress={200}
-              onLongPress={() => {
+              onLongPress={() => {             
                 if (!userStore.getState().isUserOnline) return;
                 userStore.getState().SetCurrentUserCategory(item);
                 navigation.navigate('TaskView', { title: `${item}` });
@@ -134,7 +134,7 @@ export default function HomeScreen()
         <View style={[ { marginTop: 10 }]}>
         </View>
         </Swipeable>
-          
+        
         ))}
     </ScrollView>
     <StatusBar style="light"/> 
