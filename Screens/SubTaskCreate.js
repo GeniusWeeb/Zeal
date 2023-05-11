@@ -2,7 +2,7 @@
 
   import { StatusBar } from "expo-status-bar";
   import React from "react";
-  import { StyleSheet , Text , View  , Alert , TextInput, TouchableOpacity, Button} from "react-native";
+  import { StyleSheet , Text , View  , Alert , TextInput, TouchableOpacity, Button , Image} from "react-native";
   import { SelectList } from "react-native-dropdown-select-list";
   import * as firebaseAuth from 'firebase/auth'
   import { firebaseAppStore } from "../Controller/UserController";
@@ -11,6 +11,7 @@
   import { notificationThreshold } from "../Controller/UserController";
   import * as Notifications from 'expo-notifications';
   import { StartNotificationProcess } from "../Controller/NotificationController";
+  import calendarIcon from "../assets/calendar.png"
 //#endregion
 
 export default function SubTaskCreate()
@@ -93,9 +94,9 @@ export default function SubTaskCreate()
                   <View style = {styles.dropdownContainer}>
                                   <SelectList data={fetchedData} setSelected={setTaskSelected} 
                                   search = {false}
-                                  placeholder="Select Task Category"    
+                                  placeholder="Select Task Category"                                  
                                   boxStyles={{ alignContent:"center",backgroundColor :"#9F8772" , elevation:"20" }}                       
-                                  dropdownTextStyles={{color:"black", fontWeight:900 , fontSize:17}}
+                                  dropdownTextStyles={{color:"black", fontWeight:700 , fontSize:17}}
                                   dropdownItemStyles={{alignItems:"center",direction:"inherit"}}                 
                                   disabledItemStyles={{marginHorizontal:20}}
                                   inputStyles={{fontSize:20}}
@@ -108,16 +109,17 @@ export default function SubTaskCreate()
                   <View style={[ { marginTop: 100 }]}>
                   </View>
                 { <TextInput style={styles.input}  onChangeText={SetName} value={name}
-                  placeholder="Enter Name"  placeholderTextColor="#394867"  keyboardType="default" ref={nameInputRef} />  }    
+                  placeholder="Enter Task Name"  placeholderTextColor="#394867"  keyboardType="default" ref={nameInputRef} />  }    
                   <View style={[ { marginTop: 25 }]}>
                   </View>
                   <TextInput style={styles.input}  onChangeText={SetDescription} value={descrip}
-                  placeholder="Enter Task description"  placeholderTextColor="#394867"  keyboardType="default"  ref={descriptionInputRef}/>
+                  placeholder="Enter Task Info"  placeholderTextColor="#394867"  keyboardType="default"  ref={descriptionInputRef}/>
                   <View style={[ { marginTop: 25}]}>
-                  </View>
-                  <Button title="Show Date Picker" onPress={    showDatePicker} /> 
-                  <View style={[ { marginTop: 20}]}>
-                  </View>
+                  </View>               
+                  <TouchableOpacity  style = {{bottom:10}}  onPress={showDatePicker}>
+                  <Image source={calendarIcon} style={{ width: 60, height: 60 , left:0  }} />
+                  {/* <Text style ={{fontWeight:"bold", top:1, color:"black"}}>Choose Time</Text> */}
+                   </TouchableOpacity>
                   <Text  ref={dateRef} style = {styles.input}> {mydate}  </Text> 
                   <DateTimePickerModal
                   isVisible={isDatePickerVisible}
@@ -127,7 +129,7 @@ export default function SubTaskCreate()
                   display="inline"
                       
                 />
-                  <View style={[ { marginTop: 200}]}>
+                  <View style={[ { marginTop: 180}]}>
                   </View>
                 <TouchableOpacity onPress={() =>{
                   if(name && descrip)
@@ -154,7 +156,9 @@ container:{
     paddingHorizontal :20, 
     paddingVertical:50,
     flex:1,  
-    backgroundColor:"#9BA4B5"
+    backgroundColor:"#9BA4B5",
+    alignItems:"center"
+   
 
 },       
 body: {
@@ -168,31 +172,31 @@ body: {
 },
 dropdownContainer: {
     paddingVertical: 20,
-    paddingHorizontal: 20,
-    width: "100%",
+    paddingHorizontal:10,
+    width: "90%",
     alignContent:"center",
     fontWeight:'100',
-  //  paddingTop:500,
+    alignItems:"center",
+    
     
 },
 input: {
     height: 30,
-    fontSize: 20,
+    fontSize: 17,
     fontWeight: '900',
-    color: '#333',
+    color: '#394867',
     alignSelf:"center",
   
 },
 button: {
     width:400,
-    height: 200,
-    backgroundColor: '#988980',
+    height: 300,
+    backgroundColor: 'grey',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
     fontWeight: '900',
-    bottom: 10,
-    right:25,
+    bottom: 40,
     top:0,
 
   },
@@ -200,7 +204,7 @@ button: {
     color: '#fff',
     fontSize: 50,
     fontWeight: '900',
-    bottom:40
+    bottom:90
   },
 
 }

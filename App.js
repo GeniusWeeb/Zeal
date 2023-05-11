@@ -86,7 +86,7 @@ export default function App() {
         <Stack.Screen
           name="SubTaskCreate"
           component={SubTaskCreate}
-          options={{ title: "Create Subplans", animation: "slide_from_right" , headerStyle :{ backgroundColor:"black"} , headerTitleStyle : {color : "pink" , fontWeight:"900"}, headerLeft: () => <Logo/>} }
+          options={{ title: "Subtasks", animation: "slide_from_right" , headerStyle :{ backgroundColor:"grey"} , headerTitleStyle : {color : "white" , fontWeight:"900"}, headerLeft: () => <Logo/>} }
         />
         <Stack.Screen
           name="TaskView"
