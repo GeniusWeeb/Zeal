@@ -1,14 +1,17 @@
-import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { StyleSheet , Text , View  , Alert , TextInput, TouchableOpacity, Button} from "react-native";
-import { SelectList } from "react-native-dropdown-select-list";
-import * as firebaseAuth from 'firebase/auth'
-import { firebaseAppStore } from "../Controller/UserController";
-import { GetCategories, PatchData } from "../Controller/DatabaseController";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { notificationThreshold } from "../Controller/UserController";
-import * as Notifications from 'expo-notifications';
-import { StartNotificationProcess } from "../Controller/NotificationController";
+//#region  Header Files
+
+  import { StatusBar } from "expo-status-bar";
+  import React from "react";
+  import { StyleSheet , Text , View  , Alert , TextInput, TouchableOpacity, Button} from "react-native";
+  import { SelectList } from "react-native-dropdown-select-list";
+  import * as firebaseAuth from 'firebase/auth'
+  import { firebaseAppStore } from "../Controller/UserController";
+  import { GetCategories, PatchData } from "../Controller/DatabaseController";
+  import DateTimePickerModal from "react-native-modal-datetime-picker";
+  import { notificationThreshold } from "../Controller/UserController";
+  import * as Notifications from 'expo-notifications';
+  import { StartNotificationProcess } from "../Controller/NotificationController";
+//#endregion
 
 export default function SubTaskCreate()
 {
@@ -80,74 +83,70 @@ export default function SubTaskCreate()
         SetDescription("")
         nameInputRef.current.clear();
         descriptionInputRef.current.clear();
-       
-        
-      
+            
     }
-
-//This is a subtask -> this will create name , more detail descriptions , maybe a user Defined time ,Idk about a progress bar
-
+//#region  Render Area
    return (           
-   <View style = {styles.container}>  
-        {/* <View style = {styles.body}>     
-        </View>    */}
-        <View style = {styles.dropdownContainer}>
-                        <SelectList data={fetchedData} setSelected={setTaskSelected} 
-                        search = {false}
-                        placeholder="Select Task Category"    
-                        boxStyles={{ alignContent:"center",backgroundColor :"#9F8772" , elevation:"20" }}                       
-                        dropdownTextStyles={{color:"black", fontWeight:900 , fontSize:17}}
-                        dropdownItemStyles={{alignItems:"center",direction:"inherit"}}                 
-                        disabledItemStyles={{marginHorizontal:20}}
-                        inputStyles={{fontSize:20}}
-                        notFoundText="Tasks Empty"
-                        //onSelect={Alert.alert(taskSelected)
-                        maxHeight={100}
+            <View style = {styles.container}>  
+                  {/* <View style = {styles.body}>     
+                  </View>    */}
+                  <View style = {styles.dropdownContainer}>
+                                  <SelectList data={fetchedData} setSelected={setTaskSelected} 
+                                  search = {false}
+                                  placeholder="Select Task Category"    
+                                  boxStyles={{ alignContent:"center",backgroundColor :"#9F8772" , elevation:"20" }}                       
+                                  dropdownTextStyles={{color:"black", fontWeight:900 , fontSize:17}}
+                                  dropdownItemStyles={{alignItems:"center",direction:"inherit"}}                 
+                                  disabledItemStyles={{marginHorizontal:20}}
+                                  inputStyles={{fontSize:20}}
+                                  notFoundText="Tasks Empty"
+                                  //onSelect={Alert.alert(taskSelected)
+                                  maxHeight={100}
+                                  
+                                  />
+                  </View>   
+                  <View style={[ { marginTop: 100 }]}>
+                  </View>
+                { <TextInput style={styles.input}  onChangeText={SetName} value={name}
+                  placeholder="Enter Name"  placeholderTextColor="#394867"  keyboardType="default" ref={nameInputRef} />  }    
+                  <View style={[ { marginTop: 25 }]}>
+                  </View>
+                  <TextInput style={styles.input}  onChangeText={SetDescription} value={descrip}
+                  placeholder="Enter Task description"  placeholderTextColor="#394867"  keyboardType="default"  ref={descriptionInputRef}/>
+                  <View style={[ { marginTop: 25}]}>
+                  </View>
+                  <Button title="Show Date Picker" onPress={    showDatePicker} /> 
+                  <View style={[ { marginTop: 20}]}>
+                  </View>
+                  <Text  ref={dateRef} style = {styles.input}> {mydate}  </Text> 
+                  <DateTimePickerModal
+                  isVisible={isDatePickerVisible}
+                  mode="datetime"
+                  onConfirm={handleConfirm}
+                  onCancel={hideDatePicker}
+                  display="inline"
+                      
+                />
+                  <View style={[ { marginTop: 200}]}>
+                  </View>
+                <TouchableOpacity onPress={() =>{
+                  if(name && descrip)
+                  {   
+                      AddSubCategoriesToFireBase();
                         
-                        />
-        </View>   
-        <View style={[ { marginTop: 100 }]}>
-        </View>
-      { <TextInput style={styles.input}  onChangeText={SetName} value={name}
-        placeholder="Enter Name"  placeholderTextColor="#394867"  keyboardType="default" ref={nameInputRef} />  }    
-        <View style={[ { marginTop: 25 }]}>
-        </View>
-        <TextInput style={styles.input}  onChangeText={SetDescription} value={descrip}
-        placeholder="Enter Task description"  placeholderTextColor="#394867"  keyboardType="default"  ref={descriptionInputRef}/>
-        <View style={[ { marginTop: 25}]}>
-        </View>
-        <Button title="Show Date Picker" onPress={    showDatePicker} /> 
-        <View style={[ { marginTop: 20}]}>
-        </View>
-        <Text  ref={dateRef} style = {styles.input}> {mydate}  </Text> 
-        <DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        mode="datetime"
-        onConfirm={handleConfirm}
-        onCancel={hideDatePicker}
-        display="inline"
-             
-      />
-        <View style={[ { marginTop: 200}]}>
-        </View>
-      <TouchableOpacity onPress={() =>{
-        if(name && descrip)
-         {   
-            AddSubCategoriesToFireBase();
-              
-        }
-       }}>
-        <View style={styles.button}>
-            <Text style={styles.buttonText}>ADD</Text>
-        </View>
-    </TouchableOpacity>
-        <StatusBar style="auto"/> 
-   </View>
+                  }
+                }}>
+                  <View style={styles.button}>
+                      <Text style={styles.buttonText}>ADD</Text>
+                  </View>
+              </TouchableOpacity>
+                  <StatusBar style="auto"/> 
+            </View>
     );
-
+//#endregion
 }
 
-
+// Style sheet -> Not a Big fan
 const styles=   StyleSheet.create(
 {
 container:{

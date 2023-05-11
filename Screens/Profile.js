@@ -1,12 +1,13 @@
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet , Text , View  , Image, Button, TouchableOpacity, Alert} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import userStore, { CategoryStore } from "../Controller/UserController";
-import * as firebaseAuth from 'firebase/auth'
-import { firebaseAppStore } from "../Controller/UserController";
+//#region Header Files  
+    import { useNavigation, useRoute } from "@react-navigation/native";
+    import { StatusBar } from "expo-status-bar";
+    import { StyleSheet , Text , View  , Image, Button, TouchableOpacity, Alert} from "react-native";
+    import { SafeAreaView } from "react-native-safe-area-context";
+    import userStore, { CategoryStore } from "../Controller/UserController";
+    import * as firebaseAuth from 'firebase/auth'
+    import { firebaseAppStore } from "../Controller/UserController";
 
-
+//#endregion
 export default function Profile()
 {   
     const route = useRoute();
@@ -14,34 +15,32 @@ export default function Profile()
     const auth =  firebaseAuth.getAuth(firebaseAppStore.getState().currentApp);
     const  isOnline = userStore.getState().isUserOnline;  
 
-
-
+  //for sample offline state , we can try to go online ,
+  //not sure if this is working or should be working since we dont have the response token at this stage
     function GoOnline()
     {
       userStore.getState().SetIsUserOnline(true);
     }
     function PerformSignOut()
     {
-      if(!isOnline) 
-      {
-        Alert.alert("You need to be online to sign out")
-        return;
-      }
-     userStore.getState().RemoveUser();
-     CategoryStore.getState().setCategories([]);
-     CategoryStore.persist.clearStorage();
-     userStore.persist.clearStorage();
-     if(!userStore.getState().currentUser && auth.currentUser)
-      {
-      auth.signOut().then( () => {navigation.navigate("SignIn")});    
-      }               
+          if(!isOnline) 
+          {
+            Alert.alert("You need to be online to sign out")
+            return;
+          }
+          userStore.getState().RemoveUser();
+          CategoryStore.getState().setCategories([]);
+          CategoryStore.persist.clearStorage();
+          userStore.persist.clearStorage();
+          if(!userStore.getState().currentUser && auth.currentUser)
+            {
+            auth.signOut().then( () => {navigation.navigate("SignIn")});    
+            }               
     }
 
-    return (
-      
+    return (     
         <SafeAreaView style = {styles.container}>  
-        {  <Image source={{ uri:userStore.getState().currentUserPicture }} style={{ width: 200, height: 200, borderRadius: 100 , bottom:50}} /> }
-
+        { <Image source={{ uri:userStore.getState().currentUserPicture }} style={{ width: 200, height: 200, borderRadius: 100 , bottom:50}} /> }
         <TouchableOpacity  onPress={() => PerformSignOut()}>
         <View style={styles.button}>
             <Text style={styles.buttonText}>Sign Out</Text>
@@ -59,10 +58,6 @@ export default function Profile()
         <View style={[ { marginTop: 10 }]}>
         </View>
         </TouchableOpacity>     
-    
-    
-
-     
         <StatusBar style="auto"/> 
         </SafeAreaView>
     );

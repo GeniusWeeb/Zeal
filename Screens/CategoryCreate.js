@@ -1,21 +1,26 @@
-import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { StyleSheet , Text , View , TextInput, Button, TouchableOpacity , Image , Alert} from "react-native";
-import { PatchData, PushData } from "../Controller/DatabaseController";
-import * as firebaseAuth from 'firebase/auth'
-import { firebaseAppStore } from "../Controller/UserController";
-import CategoryTaskIcon from "../assets/CreateTask.png";
-import HomeIcon from "../assets/HomeIcon.jpg";
-import { useNavigation } from "@react-navigation/native";
+  //#region HeaderFiles 
+
+   import { StatusBar } from "expo-status-bar";
+    import React from "react";
+    import { StyleSheet , Text , View , TextInput, Button, TouchableOpacity , Image , Alert} from "react-native";
+    import { PatchData, PushData } from "../Controller/DatabaseController";
+    import * as firebaseAuth from 'firebase/auth'
+    import { firebaseAppStore } from "../Controller/UserController";
+    import CategoryTaskIcon from "../assets/CreateTask.png";
+    import HomeIcon from "../assets/HomeIcon.jpg";
+    import { useNavigation } from "@react-navigation/native";
+
+//#endregion
 
 
-//CATEGORY CREATE PAGE
+  //Summary : Cateogry Create Page : Category contains Sub Tasks
+  
 
 export default function CategoryCreate()
 {
     const[text , SetText] = React.useState('');
     const auth =  firebaseAuth.getAuth(firebaseAppStore.getState().currentApp);
-   const navigate = useNavigation();
+    const navigate = useNavigation();
 
 
     async function AddCategoriesFireBase()
@@ -44,24 +49,24 @@ export default function CategoryCreate()
    
 
     return (
-      <View style = {styles.container}>  
-       <TextInput style={styles.input}  onChangeText={SetText} value={text}
-        placeholder="Enter Category name here"  placeholderTextColor="#aaa"  keyboardType="default"
-      />
-     <TouchableOpacity onPress={() => 
-     {  
-      if(!text) return;      
-       endPoint =  text;          
-        AddCategoriesFireBase();
-     }}>
-        <View style={styles.button}>
-            <Text style={styles.buttonText}>Save</Text>
-        </View>
-    </TouchableOpacity>
-    <View style={styles.footer}>
-    </View>
-        <StatusBar style="auto"/> 
-        </View>
+          <View style = {styles.container}>  
+                  <TextInput style={styles.input}  onChangeText={SetText} value={text}
+                  placeholder="Enter Category name here"  placeholderTextColor="#aaa"  keyboardType="default"
+                  />
+                  <TouchableOpacity onPress={() => 
+                  {  
+                  if(!text) return;      
+                  endPoint =  text;          
+                  AddCategoriesFireBase();
+                   }}>
+                  <View style={styles.button}>
+                  <Text style={styles.buttonText}>Save</Text>
+                  </View>
+                </TouchableOpacity>
+                <View style={styles.footer}>
+                </View>
+                <StatusBar style="auto"/> 
+          </View>
     );
 
 

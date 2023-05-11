@@ -1,20 +1,22 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet , Text , View , ScrollView , TouchableOpacity  ,Image} from "react-native";
-import {  DeleteSubTasks, GetSubCategories } from "../Controller/DatabaseController";
-import { useRoute } from "@react-navigation/native";
-import { useNavigation } from "@react-navigation/native";
-import * as firebaseAuth from 'firebase/auth';
-import { firebaseAppStore } from "../Controller/UserController";
-import React from "react";
-import { useState } from "react";
-import { Card } from "react-native-paper";
-import deleteIcon from "../assets/delete.png"
-import { Swipeable } from "react-native-gesture-handler";
-import CountDown from "react-native-countdown-component"
-import { scheduleNotificationAsync } from "expo-notifications";
-import { func } from "prop-types";
-import * as Notifications from 'expo-notifications';
-import { notificationThreshold } from "../Controller/UserController";
+//#region  Header Files
+    import { StatusBar } from "expo-status-bar";
+    import { StyleSheet , Text , View , ScrollView , TouchableOpacity  ,Image} from "react-native";
+    import {  DeleteSubTasks, GetSubCategories } from "../Controller/DatabaseController";
+    import { useRoute } from "@react-navigation/native";
+    import { useNavigation } from "@react-navigation/native";
+    import * as firebaseAuth from 'firebase/auth';
+    import { firebaseAppStore } from "../Controller/UserController";
+    import React from "react";
+    import { useState } from "react";
+    import { Card } from "react-native-paper";
+    import deleteIcon from "../assets/delete.png"
+    import { Swipeable } from "react-native-gesture-handler";
+    import CountDown from "react-native-countdown-component"
+    import { scheduleNotificationAsync } from "expo-notifications";
+    import { func } from "prop-types";
+    import * as Notifications from 'expo-notifications';
+    import { notificationThreshold } from "../Controller/UserController";
+ //#endregion   
 
 export default function TaskView()
 {
@@ -121,38 +123,32 @@ export default function TaskView()
         <View style = {styles.container}>
          <View style={[ { marginTop: 10 }]}>
         </View>
-     <ScrollView showsVerticalScrollIndicator ={false}  alwaysBounceVertical = {false} >
-        
-         {
-              subTasks.map((item, index) => (   
-         
+       <ScrollView showsVerticalScrollIndicator ={false}  alwaysBounceVertical = {false} >     
+        {  subTasks.map((item, index) => (   
             <Swipeable
-            key={index} 
-            renderRightActions={() => renderRightActions(index , item.name)}
-            
-          >           
-        <Card style = {{...styles.cardContainer , backgroundColor: generateRandomColor() , elevation:3} }  key={index} onPress={() => {
-        }}>
-        <Card.Content>
-         <Text style={styles.cardTitle}>{item.name}</Text>
-         
-         <View style={[ { marginTop:0}]}>
-         </View>
-         <Text style = {styles.cardText}>{item.task_info} </Text>
-         <View style={[ { marginTop: 0}]}>
-         </View>
-         <Text style = {styles.cardText}>Deadline Date :  {item.time} </Text>
-         <View style={[ { marginTop:0}]}>
-         </View>
-         <CountDown  digitStyle = {{backgroundColor : generateRandomColorTime() }} timeLabelStyle= {{fontSize:14 ,fontWeight:"bold" }}
-        until={ Math.round((new Date(item.time).getTime() - new Date().getTime())/1000)} 
-        size={30}
-        onFinish={() => alert('Event over !!')}
-
-      />
-        </Card.Content>
-        <View style={[ { marginTop: 2 }]}>
-        </View>
+                    key={index} 
+                    renderRightActions={() => renderRightActions(index , item.name)}        
+                  >           
+                <Card style = {{...styles.cardContainer , backgroundColor: generateRandomColor() , elevation:3} }  key={index} onPress={() => {
+                }}>
+                <Card.Content>
+                    <Text style={styles.cardTitle}>{item.name}</Text>
+                    <View style={[ { marginTop:0}]}>
+                    </View>
+                    <Text style = {styles.cardText}>{item.task_info} </Text>
+                    <View style={[ { marginTop: 0}]}>
+                    </View>
+                    <Text style = {styles.cardText}>Deadline Date :  {item.time} </Text>
+                    <View style={[ { marginTop:0}]}>
+                    </View>
+                    <CountDown  digitStyle = {{backgroundColor : generateRandomColorTime() }} timeLabelStyle= {{fontSize:14 ,fontWeight:"bold" }}
+                    until={ Math.round((new Date(item.time).getTime() - new Date().getTime())/1000)} 
+                    size={30}
+                    onFinish={() => alert('Event over !!')}
+              />
+                </Card.Content>
+                <View style={[ { marginTop: 2 }]}>
+                </View>
         </Card>     
         </Swipeable>
       ))}

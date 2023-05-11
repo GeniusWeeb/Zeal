@@ -5,6 +5,11 @@ import * as firebaseAuth from 'firebase/auth';
 
 export const notificationThreshold  = 60 ;
 
+
+//We are using Zustand , and Async storage to store data on device
+//In case of no internet connectivity ,  we can safely view the "CATEGORIES
+
+//User Store -> this contains most of the users varaible , ref to the app , ulr ref and much more
 const userStore = create(
   persist
   (
@@ -77,6 +82,7 @@ export const firebaseAppStore =create (
 );
 
 //can be independant of login state
+//Contains all the categories also shown as a part of offline state
 export const CategoryStore = create( 
   persist
   (
@@ -120,10 +126,6 @@ export const CategoryStore = create(
      }
       })
 );
-
-
-
-
 
 
 export default userStore;

@@ -1,24 +1,26 @@
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { StatusBar } from "expo-status-bar";
-import { Button, StyleSheet , Text , View , Image , TouchableOpacity, ScrollView, Alert} from "react-native";
-import userStore from "../Controller/UserController";
-import { GetCategories, PatchData } from "../Controller/DatabaseController";
-import * as firebaseAuth from 'firebase/auth'
-import { firebaseAppStore } from "../Controller/UserController";
-import { CategoryStore } from "../Controller/UserController";
-import { useState } from "react";
-import React from "react";
-import CategoryTaskIcon from "../assets/CreateTask.png";
-import CategoryCreateIcon from "../assets/CategoryCreate.png";
-import HomeIcon from "../assets/HomeIcon.jpg";
-import { Swipeable } from "react-native-gesture-handler";
-import deleteIcon from "../assets/delete.png"
-import { DeleteTaskCategory } from "../Controller/DatabaseController";
-import { Card } from "react-native-paper";
+  //#region HeaderFiles  
+    import { useNavigation, useRoute } from "@react-navigation/native";
+    import { StatusBar } from "expo-status-bar";
+    import { Button, StyleSheet , Text , View , Image , TouchableOpacity, ScrollView, Alert} from "react-native";
+    import userStore from "../Controller/UserController";
+    import { GetCategories, PatchData } from "../Controller/DatabaseController";
+    import * as firebaseAuth from 'firebase/auth'
+    import { firebaseAppStore } from "../Controller/UserController";
+    import { CategoryStore } from "../Controller/UserController";
+    import { useState } from "react";
+    import React from "react";
+    import CategoryTaskIcon from "../assets/CreateTask.png";
+    import CategoryCreateIcon from "../assets/CategoryCreate.png";
+    import HomeIcon from "../assets/HomeIcon.jpg";
+    import { Swipeable } from "react-native-gesture-handler";
+    import deleteIcon from "../assets/delete.png"
+    import { DeleteTaskCategory } from "../Controller/DatabaseController";
+    import { Card } from "react-native-paper";
+//#endregion
+
 export default function HomeScreen()
 
 {   
-
     const route =  useRoute();
     const navigation = useNavigation();
     const user   =  route.params?.user;
@@ -26,19 +28,19 @@ export default function HomeScreen()
     const [category, setCategory] = useState([]);
     const  isOnline =  userStore.getState().isUserOnline? true: false ;
 
-    const generateRandomColor = () => {
+    const generateRandomColor = () => 
+    {
       const randomColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)},0.2)`;
       return "#" + randomColor;
     };
-  React.useEffect ( () => {
+
+   React.useEffect ( () => {
     setCategory(CategoryStore.getState().categories);
-  } , [CategoryStore.getState().categories])
+     } , [CategoryStore.getState().categories])
   
 
-  React.useEffect(() => {
-   
+   React.useEffect(() => {  
     const unsubscribe = navigation.addListener('state', (event) => {
-
       if (event.data.state.routes[event.data.state.index].name === 'HomeScreen') 
       {   
         console.log(`User Signed in ??${userStore.getState().isUserSignedIn}`)      
@@ -53,52 +55,52 @@ export default function HomeScreen()
            console.log(CategoryStore.getState().lastUpdated);
             setCategory(categories);
           })
-        }     
-         
+        }             
       }
     });
   
     return unsubscribe;
-  }, [navigation]);
+   }, [navigation]);
 
 
   async  function Delete (name)
   {
-    const idToken = await auth.currentUser.getIdToken;
-    // set up the request headers, including the Firebase ID token in the Authorization header
-    const headers = new Headers({
-      "Authorization": `Bearer ${idToken}`,
-      "Content-Type": "application/json"
-    });
-
-    DeleteTaskCategory(headers, auth.currentUser,name);
-
+        const idToken = await auth.currentUser.getIdToken;
+        // set up the request headers, including the Firebase ID token in the Authorization header
+        const headers = new Headers({
+          "Authorization": `Bearer ${idToken}`,
+          "Content-Type": "application/json"
+        });
+      DeleteTaskCategory(headers, auth.currentUser,name);
   }
-  const handleDelete = (index) => {
-    //Adding a guard clause so we prevent any actions in offline state
-    let name = CategoryStore.getState() .GetCategoryName(index) ;
-    if(!isOnline ||  name == null)return;    
-     const newCategory = [...category];
-     newCategory.splice(index, 1);
-     setCategory(newCategory);
-     CategoryStore.getState().DeleteCategory(index);
-     Delete(name);
 
-
-  };
+    
+      const handleDelete = (index) => 
+      {
+      //Adding a guard clause so we prevent any actions in offline state
+            let name = CategoryStore.getState() .GetCategoryName(index) ;
+            if(!isOnline ||  name == null)return;    
+            const newCategory = [...category];
+            newCategory.splice(index, 1);
+            setCategory(newCategory);
+            CategoryStore.getState().DeleteCategory(index);
+            Delete(name);
+      };
 
 
   //this is the the delete button
   const renderRightActions = (index) => {
-    return (
-      <TouchableOpacity
-        style={styles.deleteButton}
-        onPress={() => handleDelete(index)}  >
-         <Image source={deleteIcon} style={{ width: 40, height: 40, top:15 }} />       
-      </TouchableOpacity>
-    );
+          return (
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={() => handleDelete(index)}  >
+            <Image source={deleteIcon} style={{ width: 40, height: 40, top:15 }} />       
+          </TouchableOpacity>
+        );
   };
 
+
+  //region -> Render 
   return (    
     
     <View style = {styles.container}>
@@ -136,7 +138,6 @@ export default function HomeScreen()
         ))}
     </ScrollView>
     <StatusBar style="light"/> 
-
     <View style={styles.footer}>
       <View style= {styles.footerButtons}>
      
@@ -155,14 +156,12 @@ export default function HomeScreen()
   </View>
 );
 
-
 }
 
 
 const styles=   StyleSheet.create(
 {
 container:{
-
     flex:1 ,
     backgroundColor: "#434242",
     alignItems : 'center',
@@ -176,8 +175,6 @@ buttonContainer: {
     width: '100%',
     padding: 50,
   backgroundColor:'#41644A'
-    
-
 },
 
 taskButtons :{

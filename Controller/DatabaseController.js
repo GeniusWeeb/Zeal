@@ -36,7 +36,7 @@ export async function PatchData(body , headers , currentUser , endPoint)
 {
     // WE CAN AD APPENDED URL SECTIONS AND HAVE THEM SAVED and we can just operawte on the base url  that is upto 
     // the unique user id
-    const response =  await fetch(`https://zeal-383911-default-rtdb.europe-west1.firebasedatabase.app/users/${currentUser.uid}/${endPoint}.json`,{
+    const response =  await fetch(`${url}/${currentUser.uid}/${endPoint}.json`,{
         method: "PATCH" , 
         headers: headers,
         body: body
@@ -51,14 +51,14 @@ export async function GETDATA(body , headers , currentUser)
     // Note => We always looks to fetch from the root node and then parse data as we want
     //this helps us to subscribe to the entire UID node than a specific sub node,
 
-    const response =  await fetch(`https://zeal-383911-default-rtdb.europe-west1.firebasedatabase.app/users/${currentUser.uid}.json` ,{
+    const response =  await fetch(`${url}/${currentUser.uid}.json` ,{
         method: "GET" , 
         headers: headers,
         body: body
       });
       const addedData = await response.json();
       //response.json can be stored in => local storage and parsed directly to the UI elemtns
-      console.log("Added data:", addedData);
+      console.log("Fetced data:", addedData);
   
 }
       
@@ -66,7 +66,7 @@ export async function DeleteTaskCategory( headers , currentUser ,categoryName)
 {
     // WE CAN AD APPENDED URL SECTIONS AND HAVE THEM SAVED and we can just operawte on the base url  that is upto 
     // the unique user id
-    const response =  await fetch(`https://zeal-383911-default-rtdb.europe-west1.firebasedatabase.app/users/${currentUser.uid}/${categoryName}.json` ,{
+    const response =  await fetch(`${url}/${currentUser.uid}/${categoryName}.json` ,{
         method: "DELETE" , 
         headers: headers,
   
@@ -82,7 +82,7 @@ export async function DeleteSubTasks(  headers , currentUser , categoryName , ta
     // WE CAN AD APPENDED URL SECTIONS AND HAVE THEM SAVED and we can just operawte on the base url  that is upto 
     //note => replace tasl_name => specifc subtask name
     // the unique user id
-    const response =  await fetch(`https://zeal-383911-default-rtdb.europe-west1.firebasedatabase.app/users/${currentUser.uid}/${categoryName}/names/${taskName}.json` ,{
+    const response =  await fetch(`${url}/${currentUser.uid}/${categoryName}/names/${taskName}.json` ,{
         method: "DELETE" , 
         headers: headers,
       });
@@ -106,7 +106,7 @@ export async function GetCategories( currentUser)
     "Authorization": `Bearer ${idToken}`,
     "Content-Type": "application/json"
   });
-   const response =  await fetch(`https://zeal-383911-default-rtdb.europe-west1.firebasedatabase.app/users/${currentUser.uid}.json?shallow=true` ,{
+   const response =  await fetch(`${url}/${currentUser.uid}.json?shallow=true` ,{
   method: "GET" , 
   headers: headers,
 });
@@ -125,7 +125,7 @@ export async function GetSubCategories( currentUser , categoryName)
     "Authorization": `Bearer ${idToken}`,
     "Content-Type": "application/json"
   });
-   const response =  await fetch(`https://zeal-383911-default-rtdb.europe-west1.firebasedatabase.app/users/${currentUser.uid}/${categoryName}/names.json` ,{
+   const response =  await fetch(`${url}/${currentUser.uid}/${categoryName}/names.json` ,{
   method: "GET" , 
   headers: headers,
 });
