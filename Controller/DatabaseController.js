@@ -69,7 +69,7 @@ export async function DeleteTaskCategory( headers , currentUser ,categoryName)
 {
     // WE CAN AD APPENDED URL SECTIONS AND HAVE THEM SAVED and we can just operawte on the base url  that is upto 
     // the unique user id
-    const response =  await fetch(`${url}/${currentUser.uid}/${categoryName}.json` ,{
+    const response =  await fetch(`${url}/${currentUser.uid}/Categories/${categoryName}.json` ,{
         method: "DELETE" , 
         headers: headers,
   
@@ -85,7 +85,7 @@ export async function DeleteSubTasks(  headers , currentUser , categoryName , ta
     // WE CAN AD APPENDED URL SECTIONS AND HAVE THEM SAVED and we can just operawte on the base url  that is upto 
     //note => replace tasl_name => specifc subtask name
     // the unique user id
-    const response =  await fetch(`${url}/${currentUser.uid}/${categoryName}/names/${taskName}.json` ,{
+    const response =  await fetch(`${url}/${currentUser.uid}/Categories/${categoryName}/names/${taskName}.json` ,{
         method: "DELETE" , 
         headers: headers,
       });

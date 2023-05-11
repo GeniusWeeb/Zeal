@@ -148,6 +148,7 @@ export default function TaskView()
                     until={ Math.round((new Date(item.time).getTime() - new Date().getTime())/1000)} 
                     size={30}
                     onFinish={() => { userStore.getState().UpdateUserTaskFinished()
+                        handleDelete(index, item.name)
             }}
               />
                 </Card.Content>
