@@ -23,13 +23,13 @@ if (!firebaseApp.getApps().length) {
   firebaseAppStore.getState().AssignApp(  firebaseApp.initializeApp(firebaseConfig, "Zeal")); 
 }
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false,
-  }),
-});
+// Notifications.setNotificationHandler({
+//   handleNotification: async () => ({
+//     shouldShowAlert: true,
+//     shouldPlaySound: true,
+//     shouldSetBadge: false,
+//   }),
+// });
 export default function SignIn() {
 
     const navigation = useNavigation(); 
@@ -81,26 +81,7 @@ export default function SignIn() {
         console.log("Trying Silent Sign in")
       },[userStore.getState().currentUserCredential] )
 
-      React.useEffect(()=> {
-
-        //Here the apps recieved a notificaion we assign it
-      notificationListener.current = Notifications.addNotificationReceivedListener( notification => {
-        SetNotification(notification.request.content.body)
-      })
-
-
-
-      //the user now taps on the notification
-      responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-        console.log(response);})
-
-        //unsubscribing to the listeners
-        return () => {
-          Notifications.removeNotificationSubscription(notificationListener.current);
-          Notifications.removeNotificationSubscription(responseListener.current);
-        };
-
-      },[])
+  
      
     async function SignInGoogle()
       {              
@@ -160,17 +141,6 @@ export default function SignIn() {
       console.log(`Current AsyncStorage size: ${totalSize} bytes`);
     }
 
-    async function schedulePushNotification() {
-      await Notifications.scheduleNotificationAsync({
-        content: {
-          title: "Your first Notification",
-          body: 'Welcome to Zeal , Track your goals with ease ! ',
-          data: { data: 'goes here' },
-        },
-        trigger: { seconds: 2 },
-      });
-    }
-    
 
   return (
     <ImageBackground source={require('../assets/splash.png')} style={styles.backgroundImage} > 

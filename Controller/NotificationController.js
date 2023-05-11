@@ -13,9 +13,7 @@ async function ScheduleCustomNot(notyTime , name , userName)
         seconds:notyTime
       }
     }).then((result)=> {
-
-      console.log(`Added Notification ${name}`)
-     
+      console.log(`Added Notification ${name}`)    
     })
 }
       // this will shedule the checks but

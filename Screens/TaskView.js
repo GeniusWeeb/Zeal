@@ -144,7 +144,6 @@ export default function TaskView()
          <Text style = {styles.cardText}>Deadline Date :  {item.time} </Text>
          <View style={[ { marginTop:0}]}>
          </View>
-         {tick(item)}
          <CountDown  digitStyle = {{backgroundColor : generateRandomColorTime() }} timeLabelStyle= {{fontSize:14 ,fontWeight:"bold" }}
         until={ Math.round((new Date(item.time).getTime() - new Date().getTime())/1000)} 
         size={30}
