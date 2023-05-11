@@ -145,7 +145,6 @@ export default function SignIn() {
 
   return (
     <ImageBackground source={require('../assets/splash.jpg')} style={styles.backgroundImage} > 
-    <Text  style = {{fontWeight:"bold",fontSize:25 } }> </Text>
      <TouchableOpacity onPress={() => promptAsync()}>
       <Image source={googleIcon} style={{ width: 150, height: 150, left: 40, top:184 }} />
     </TouchableOpacity>
@@ -174,7 +173,7 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    resizeMode: "contain",
+    resizeMode: "center",
     justifyContent: "center",
     alignItems: 'center',
     backgroundColor:'rgba(0, 0, 0,10)',
