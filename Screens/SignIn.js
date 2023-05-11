@@ -149,13 +149,7 @@ export default function SignIn() {
       <Image source={googleIcon} style={{ width: 90, height: 90, marginRight: 10 }} />
     </TouchableOpacity>
       <Button title = "Offline access" onPress={()=> SetOfflineState()}/>
-      <Button title = "Storage access" onPress={()=> GetStorageSize()}/>
-      <Button
-        title="Press to schedule a notification"
-        onPress={async () => {
-          await schedulePushNotification();
-        }}
-      />
+      {/* <Button title = "Storage access" onPress={()=> GetStorageSize()}/> */}
       <StatusBar style="dark" />
       {/* <SafeAreaView style={styles.container}>  
    
