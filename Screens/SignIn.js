@@ -14,6 +14,7 @@ import userStore,{ useAssignUserController, useUserController } from '../Control
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useStore } from 'zustand';
 import googleIcon from "../assets/google.png"
+import offlineIcon from "../assets/Offline.png"
 import * as Notifications from 'expo-notifications';
 
 WebBrowser.maybeCompleteAuthSession();
@@ -143,12 +144,14 @@ export default function SignIn() {
 
 
   return (
-    <ImageBackground source={require('../assets/splash.png')} style={styles.backgroundImage} > 
-    <Text> Welcome to zeal </Text>
+    <ImageBackground source={require('../assets/splash.jpg')} style={styles.backgroundImage} > 
+    <Text  style = {{fontWeight:"bold",fontSize:25 } }> </Text>
      <TouchableOpacity onPress={() => promptAsync()}>
-      <Image source={googleIcon} style={{ width: 90, height: 90, marginRight: 10 }} />
+      <Image source={googleIcon} style={{ width: 150, height: 150, left: 40, top:184 }} />
     </TouchableOpacity>
-      <Button title = "Offline access" onPress={()=> SetOfflineState()}/>
+      <TouchableOpacity onPress={() => SetOfflineState()}>
+      <Image source={offlineIcon} style={{ width: 75, height: 75, right: 50 , top:70 }} />
+    </TouchableOpacity>
       {/* <Button title = "Storage access" onPress={()=> GetStorageSize()}/> */}
       <StatusBar style="dark" />
       {/* <SafeAreaView style={styles.container}>  
@@ -171,9 +174,12 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    resizeMode: "cover",
+    resizeMode: "contain",
     justifyContent: "center",
     alignItems: 'center',
+    backgroundColor:'rgba(0, 0, 0,10)',
+    
+    
 }
 
 
