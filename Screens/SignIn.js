@@ -16,6 +16,7 @@ import { useStore } from 'zustand';
 import googleIcon from "../assets/google.png"
 import offlineIcon from "../assets/Offline.png"
 import * as Notifications from 'expo-notifications';
+import { Permissions } from 'expo-notifications';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -48,10 +49,28 @@ export default function SignIn() {
         androidClientId : "381324936027-mnoj4t98j0elf7g7totb9bkjflv76om3.apps.googleusercontent.com"     
       });
 
+
+
+
+      async function RegisterNotification()
+      {
+       const { status} =   await Notifications .requestPermissionsAsync()
+       if(status != 'granted')
+        Alert.alert("You must grant permissions to recieve notifications")
+        return;
+      }
+      //Ask for Noitifcation permission when component mounts
+      React.useEffect(()=> {
+      RegisterNotification();
+      } ,[]
+      )
+
       React.useEffect(()=>{
           console.log("App has been assigned");
       },[firebaseAppStore.getState().currentApp] )
 
+
+      // This changes as soon we get a request token and we start auhtroizing by showing a prompt
       React.useEffect(() => {  
         if (response?.type === "success") { 
           setAccessToken(response.authentication.accessToken);
