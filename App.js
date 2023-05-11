@@ -81,7 +81,7 @@ export default function App() {
         <Stack.Screen
           name="CategoryCreate"
           component={CategoryCreate}
-          options={{ title: "Categories sections", animation: "fade" ,headerStyle :{ backgroundColor:"black"} , headerTitleStyle : {color : "white" , fontWeight:"900"}, headerLeft: () => <Logo/>  }}
+          options={{ title: "Create Category", animation: "fade" ,headerStyle :{ backgroundColor:"black"} , headerTitleStyle : {color : "white" , fontWeight:"900"}, headerLeft: () => <Logo/>  }}
         />
         <Stack.Screen
           name="SubTaskCreate"

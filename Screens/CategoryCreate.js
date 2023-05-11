@@ -9,8 +9,8 @@
     import CategoryTaskIcon from "../assets/CreateTask.png";
     import HomeIcon from "../assets/HomeIcon.jpg";
     import { useNavigation } from "@react-navigation/native";
-
-//#endregion
+    import { Card } from "react-native-paper";
+//#endregio n
 
 
   //Summary : Cateogry Create Page : Category contains Sub Tasks
@@ -59,10 +59,23 @@ export default function CategoryCreate()
                   endPoint =  text;          
                   AddCategoriesFireBase();
                    }}>
+                     <View style={[ { marginTop:0}]}>
+                    </View>
                   <View style={styles.button}>
                   <Text style={styles.buttonText}>Save</Text>
                   </View>
                 </TouchableOpacity>
+                <Card style = {{...styles.cardContainer  , elevation:3} }   >
+                <Card.Content>
+                    <Text style={styles.cardTitle}>Quick tip</Text>
+                    <View style={[ { marginTop:5}]}>
+                    </View>
+                    <Text style = {styles.cardText}>Think of this as creating categories  in which you can add further tasks 
+                    for Eg , If we create a categoy deadline , we can add tasks like exam dates , project submission etc  </Text>
+                    <View style={[ { marginTop:0}]}>
+                    </View>
+                </Card.Content>
+                </Card>
                 <View style={styles.footer}>
                 </View>
                 <StatusBar style="auto"/> 
@@ -117,6 +130,38 @@ footer: {
     color: 'white',
     fontSize: 16,
     fontWeight: '900',
+  },
+  cardContainer: {
+    width: 250,
+    height: 200,
+    backgroundColor:"#B9EDDD",
+   
+    borderRadius: 5,
+    elevation: 5,
+    alignSelf: 'center',
+    marginBottom: 10,
+    padding: 10,
+
+//   borderWidth: 2,
+    //borderColor: 'grey',
+
+   marginVertical: 10,
+   marginHorizontal: 20,
+   
+  },
+  cardTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 1, height: 2},
+    textShadowRadius: 1,
+    elevation: 3,
+  },
+  cardText: {
+    fontSize: 14,
+    marginVertical: 10,
+    fontWeight:"700",
+    color:"#4F4557"
   },
 
 });
