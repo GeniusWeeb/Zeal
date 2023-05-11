@@ -39,8 +39,9 @@ export default function CategoryCreate()
         }
 
         body = JSON.stringify(data);
+        var tempEndPount = `Categories/${text}`
     
-      PatchData(body , headers , auth.currentUser , text);
+      PatchData(body , headers , auth.currentUser , tempEndPount);
       Alert.alert("Category added")
       navigate.navigate("HomeScreen")
       

@@ -34,11 +34,12 @@ export default function HomeScreen()
       return "#" + randomColor;
     };
 
+    //As soon as component mounts we will set data
    React.useEffect ( () => {
     setCategory(CategoryStore.getState().categories);
      } , [CategoryStore.getState().categories])
   
-
+//for fetching the data from firebase 
    React.useEffect(() => {  
     const unsubscribe = navigation.addListener('state', (event) => {
       if (event.data.state.routes[event.data.state.index].name === 'HomeScreen') 

@@ -106,7 +106,7 @@ export async function GetCategories( currentUser)
     "Authorization": `Bearer ${idToken}`,
     "Content-Type": "application/json"
   });
-   const response =  await fetch(`${url}/${currentUser.uid}.json?shallow=true` ,{
+   const response =  await fetch(`${url}/${currentUser.uid}/Categories.json?shallow=true` ,{
   method: "GET" , 
   headers: headers,
 });
@@ -125,7 +125,7 @@ export async function GetSubCategories( currentUser , categoryName)
     "Authorization": `Bearer ${idToken}`,
     "Content-Type": "application/json"
   });
-   const response =  await fetch(`${url}/${currentUser.uid}/${categoryName}/names.json` ,{
+   const response =  await fetch(`${url}/${currentUser.uid}/Categories/${categoryName}/names.json` ,{
   method: "GET" , 
   headers: headers,
 });

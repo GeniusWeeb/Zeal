@@ -21,7 +21,9 @@ const userStore = create(
   currentUserCredential:null,
   isUserOnline : false,
   isUserSignedIn: false,
-
+  userTaskCreated : 0 ,
+  userTaskFinished: 0 ,
+  userTaskDeleted : 0,
   lastUpdatedUser:Date.now(),
   assignUser: (user, app , credential) =>
     set((state) => ({
@@ -47,7 +49,21 @@ const userStore = create(
   })) ,
    SetIsUserOnline : (val) => set((state) => ({
    isUserOnline: val,
+  })),
+
+  UpdateUserTaskCreated: () => ((state) => ({
+    userTaskCreated : userTaskCreated + 1,
+    lastUpdated : Date.now(),
+  })),
+  UpdateUserTaskFinished: () => ((state) => ({
+    userTaskFinished : userTaskFinished + 1,
+    lastUpdated : Date.now(),
+  })),
+  UpdateUserTaskDeleted: () => ((state) => ({
+    userTaskDeleted : userTaskDeleted + 1,
+    lastUpdated : Date.now(),
   }))
+
 }),
  {  name : "SavedUserData",
     storage: createJSONStorage(()=> AsyncStorage),

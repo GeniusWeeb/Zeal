@@ -85,7 +85,8 @@ export default function SignIn() {
         console.log(userStore.getState().isUserSignedIn)
         // Check if user is already signed in
         const unsubscribe = auth.onAuthStateChanged((user) => {
-          if (user || userStore.getState().isUserSignedIn) {
+          if (user || userStore.getState().isUserSignedIn) 
+          {
             SetFinalUser(userStore.getState().currentUser);
             navigation.navigate("HomeScreen");
           } else {

@@ -77,7 +77,7 @@ export default function SubTaskCreate()
         } 
         const body = JSON.stringify(data);
         //name is the linking key 
-        const alterEndPoint = `${taskSelected}/names/${name}`;
+        const alterEndPoint = `Categories/${taskSelected}/names/${name}`;
         PatchData(body , headers , auth.currentUser , alterEndPoint);
         StartNotificationProcess(mydate , name , auth.currentUser.displayName);
         SetName("")
