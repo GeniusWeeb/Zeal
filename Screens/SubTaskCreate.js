@@ -95,14 +95,15 @@ export default function SubTaskCreate()
             <View style = {styles.container}>  
                   {/* <View style = {styles.body}>     
                   </View>    */}
+                  <View style = {styles.DropDownView}>
                   <View style = {styles.dropdownContainer}>
                                   <SelectList data={fetchedData} setSelected={setTaskSelected} 
                                   search = {false}
                                   placeholder="Select Task Category"                                  
-                                  boxStyles={{ alignContent:"center",backgroundColor :"#9F8772" , elevation:"20" }}                       
+                                  boxStyles={{ alignContent:"center",backgroundColor :"#9F8772" , elevation:"20" ,height:50 , width:250,}}                       
                                   dropdownTextStyles={{color:"black", fontWeight:700 , fontSize:17}}
-                                  dropdownItemStyles={{alignItems:"center",direction:"inherit"}}                 
-                                  disabledItemStyles={{marginHorizontal:20}}
+                                  dropdownItemStyles={{alignItems:"center"}}                 
+                                  
                                   inputStyles={{fontSize:20}}
                                   notFoundText="Tasks Empty"
                                   //onSelect={Alert.alert(taskSelected)
@@ -110,7 +111,8 @@ export default function SubTaskCreate()
                                   
                                   />
                   </View>   
-                  <View style={[ { marginTop: 100 }]}>
+                  </View>
+                  <View style={[ { marginTop: 200 }]}>
                   </View>
                 { <TextInput style={styles.input}  onChangeText={SetName} value={name}
                   placeholder="Enter Task Name"  placeholderTextColor="#394867"  keyboardType="default" ref={nameInputRef} />  }    
@@ -210,6 +212,12 @@ button: {
     fontWeight: '900',
     bottom:90
   },
+  DropDownView:{
+    position:"absolute",
+    justifyContent:"center",
+    alignContent:"center",
+    right:50
+  }
 
 }
 ) 

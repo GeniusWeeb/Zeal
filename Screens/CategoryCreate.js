@@ -11,6 +11,7 @@
     import { useNavigation } from "@react-navigation/native";
     import { Card } from "react-native-paper";
     import CategoryCreateIcon from "../assets/CategoryCreate.png";
+    import userStore from "../Controller/UserController";
     
 //#endregio n
 
@@ -24,9 +25,13 @@ export default function CategoryCreate()
     const auth =  firebaseAuth.getAuth(firebaseAppStore.getState().currentApp);
     const navigate = useNavigation();
     const navigation = useNavigation();
-
+    const  isOnline = userStore.getState().isUserOnline;  
     async function AddCategoriesFireBase()
     {
+      if(!isOnline) {
+        Alert.alert("Be online to add ")
+        return;
+      }
         const idToken = await auth.currentUser.getIdToken;
         // set up the request headers, including the Firebase ID token in the Authorization header
         const headers = new Headers({
@@ -57,8 +62,8 @@ export default function CategoryCreate()
           <View style = {styles.container}>  
                   <TextInput style={styles.input}  onChangeText={SetText} value={text}
                   placeholder="Enter Category name here"  placeholderTextColor="#aaa"  keyboardType="default"
-                  />
-                  <TouchableOpacity onPress={() => 
+                  />  
+                    <TouchableOpacity  style= {styles.saveButtonsView} onPress={() => 
                   {  
                   if(!text) return;      
                   endPoint =  text;          
@@ -196,6 +201,11 @@ footer: {
     flexDirection: 'row',
     alignItems: 'stretch',
     justifyContent: 'space-around',
+  },
+  saveButtonsView:{
+    position:"absolute" ,
+    bottom:380
+
   }
 
 });

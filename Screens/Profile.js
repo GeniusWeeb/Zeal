@@ -82,7 +82,7 @@ export default function Profile()
         <Text style = {{color:"white"}}>Task Deleted</Text>
         </View>
         <View style = {styles.TaskCount}>
-        <Text style = {{color:"white" , fontSize:20, fontWeight:"bold" , right:15}}>{userStore.getState().userTaskCreated}</Text>
+        <Text style = {{color:"white" , fontSize:20, fontWeight:"bold" , right:15 }}>{userStore.getState().userTaskCreated}</Text>
         <Text style = {{color:"white", fontSize:20, fontWeight:"bold" ,}}>{userStore.getState().userTaskFinished}</Text>  
         <Text style = {{color:"white", fontSize:20, fontWeight:"bold" ,left:15}}>{userStore.getState().userTaskDeleted}</Text>
         </View>

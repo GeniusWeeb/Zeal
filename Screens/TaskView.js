@@ -144,7 +144,7 @@ export default function TaskView()
                     <Text style = {styles.cardText}>Deadline Date :  {item.time} </Text>
                     <View style={[ { marginTop:0}]}>
                     </View>
-                    <CountDown  digitStyle = {{backgroundColor : generateRandomColorTime() }} timeLabelStyle= {{fontSize:14 ,fontWeight:"bold" }}
+                    <CountDown style = {styles.CountDownView}  digitStyle = {{backgroundColor : generateRandomColorTime() }} timeLabelStyle= {{fontSize:14 ,fontWeight:"bold" }}
                     until={ Math.round((new Date(item.time).getTime() - new Date().getTime())/1000)} 
                     size={30}
                     onFinish={() => { userStore.getState().UpdateUserTaskFinished()
@@ -193,7 +193,7 @@ button: {
     fontWeight: '900',
   },
   cardContainer: {
-    width: 300,
+    width:  350,
     height: 300,
    
     borderRadius: 5,
@@ -223,6 +223,13 @@ button: {
     fontWeight:"700",
     color:"black"
   },
+  CountDownView :{
+
+    position:"absolute",
+    left: 20,
+    top:180,
+    
+  }
 
 
 });
