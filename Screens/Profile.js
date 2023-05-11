@@ -8,6 +8,7 @@
     import { firebaseAppStore } from "../Controller/UserController";
     import logoutIcon from "../assets/logout.png"
     import blackBgIcon from "../assets/black-bg.png"
+    import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 //#endregion
 export default function Profile()
@@ -47,13 +48,48 @@ export default function Profile()
         { <Image source={{ uri:userStore.getState().currentUserPicture }} style={styles.profileImageStyle} /> }
         <Text style = {{top:235 ,color:"#146C94" ,fontWeight:"bold",fontSize:17}} > {userStore.getState().currentUser.displayName} </Text>
         <Text style = {{top:234 ,color:"#19A7CE" ,fontWeight:"600",fontSize:16}} > {userStore.getState().currentUser.email} </Text>
-        <Image source={blackBgIcon} style={{ width: 400, height: 700  , borderRadius: 30 ,top:300,}} />
-        
+        <Image source={blackBgIcon} style={{ width: 400, height: 700  , borderRadius: 30 ,top:300,}} />     
+        <View style ={styles.progressView}>
+          <AnimatedCircularProgress
+            size={70}
+            width={2}
+            //1 * the item completed count
+            fill={1.2 * 5   }
+            tintColor="#00e0ff"
+            onAnimationComplete={() => console.log('onAnimationComplete')}
+            backgroundColor="#3d5875"         
+          />
+          <AnimatedCircularProgress
+            size={70}
+            width={2}
+            fill={20}
+            tintColor="yellow"
+            onAnimationComplete={() => console.log('onAnimationComplete')}
+            backgroundColor="#3d5875"       
+          /> 
+           <AnimatedCircularProgress
+          size={70}
+          width={2}
+          fill={20}
+          tintColor="red"
+          onAnimationComplete={() => console.log('onAnimationComplete')}
+          backgroundColor="#3d5875"       
+        />                       
+          </View>
+        <View style = {styles.TaskString}>  
+        <Text style = {{color:"white"}}>Task Created</Text>
+        <Text style = {{color:"white"}}>Task Fnished</Text>  
+        <Text style = {{color:"white"}}>Task Deleted</Text>
+        </View>
+        <View style = {styles.TaskCount}>
+        <Text style = {{color:"white" , fontSize:20, fontWeight:"bold" , right:10}}>70</Text>
+        <Text style = {{color:"white", fontSize:20, fontWeight:"bold" ,}}>50</Text>  
+        <Text style = {{color:"white", fontSize:20, fontWeight:"bold" ,left:10}}>40</Text>
+        </View>
         <TouchableOpacity  style = {{bottom:100}}  onPress={() => PerformSignOut()}>
         <Image source={logoutIcon} style={{ width: 60, height: 60 ,  }} />
         <Text style ={{fontWeight:"bold", top:1, color:"white"}}>Logout</Text>
-        </TouchableOpacity>
-        
+        </TouchableOpacity> 
         <StatusBar style="auto"/> 
         </SafeAreaView>
     );
@@ -106,6 +142,40 @@ profileImageStyle :{
    borderRadius: 60 ,
    top:220,
   
-  
+},
+progressView :{
+  position: "absolute",
+ flexDirection:"row",
+  //alignItems:"baseline",
+  justifyContent:"space-evenly",
+  bottom:140,
+  marginBottom:0,
+  flex:1,
+  width:400,
+  height:200, 
+},
+TaskString :{
+  position: "absolute",
+  flexDirection:"row",
+   //alignItems:"baseline",
+   justifyContent:"space-evenly",
+   bottom:50,
+   marginBottom:0,
+   flex:1,
+   width:400,
+   height:200, 
+
+},
+TaskCount :{
+  position: "absolute",
+  flexDirection:"row",
+   //alignItems:"baseline",
+   justifyContent:"space-evenly",
+   bottom:115,
+   marginBottom:0,
+   flex:1,
+   width:400,
+   height:200, 
+
 }
 });
