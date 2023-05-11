@@ -40,6 +40,10 @@ const userStore = create(
       isUserSignedIn:false,
       currentUserApp:null,
       currentUserCredential:null ,
+      userTaskCreated : null ,
+      userTaskFinished: null ,
+      userTaskDeleted : null,
+
     })),
   assignUserPicture: (uri) => set((state) => ({
     currentUserPicture: uri
