@@ -45,8 +45,8 @@ export default function Profile()
 
         <SafeAreaView style = {styles.container}>  
         { <Image source={{ uri:userStore.getState().currentUserPicture }} style={styles.profileImageStyle} /> }
-        <Text style = {{top:235 ,color:"black" ,fontWeight:"bold",fontSize:17}} > {userStore.getState().currentUser.displayName} </Text>
-        <Text style = {{top:234 ,color:"grey" ,fontWeight:"600",fontSize:16}} > {userStore.getState().currentUser.email} </Text>
+        <Text style = {{top:235 ,color:"#146C94" ,fontWeight:"bold",fontSize:17}} > {userStore.getState().currentUser.displayName} </Text>
+        <Text style = {{top:234 ,color:"#19A7CE" ,fontWeight:"600",fontSize:16}} > {userStore.getState().currentUser.email} </Text>
         <Image source={blackBgIcon} style={{ width: 400, height: 700  , borderRadius: 30 ,top:300,}} />
         
         <TouchableOpacity  style = {{bottom:100}}  onPress={() => PerformSignOut()}>
@@ -66,7 +66,7 @@ const styles=   StyleSheet.create(
 container:{
 
     flex:1 ,
-    backgroundColor: "white",
+    backgroundColor: "#F2E3DB",
     alignItems : 'center',
     justifyContent:'center',
 },
