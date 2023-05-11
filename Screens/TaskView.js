@@ -33,9 +33,6 @@ export default function TaskView()
     //We can use this useEffect as well , Just clear the notifications
   
     React.useEffect(() => {
-
-
-        Cancel();
         navigation.setOptions({
           title: title,
           headerStyle: { backgroundColor: '#7C96AB' },
@@ -52,9 +49,7 @@ export default function TaskView()
         await Notifications.cancelAllScheduledNotificationsAsync().then((result) => {
         console.log("Cleaned notification")
         });
-      }
-
-      
+      }   
       //Delets the sub tasks -> different end points
       async  function Delete (name)
       {
@@ -95,15 +90,13 @@ export default function TaskView()
             
             let subCategories = []
             // Fetch categories here
-            GetSubCategories(auth.currentUser,title ).then((result) => {
-              
+            GetSubCategories(auth.currentUser,title ).then((result) => {             
               for( let item   in result)
                 {              
                   subCategories.push(result[item])
                 }
-
               SetTaskData(subCategories);
-             
+           
             })
           }
         });
@@ -113,44 +106,7 @@ export default function TaskView()
 
 
 
-      // this will shedule the checks but
-      //1 use case remains that is -> if at the time of scheduling you are already the given threshold then what?
-      //2 What if the task is deleted  thru its complete existnce 
-      //The Category is deleted -> We will have to search thru the scheduled notification in that case
-      async function ScheduleCustomNot(notyTime , item)
-      { 
-            await Notifications.scheduleNotificationAsync({    
-            content :{
-              title: `Hurry ${auth.currentUser.displayName}!`,
-              body: `Your task ${item.name} is about to end`
-            },
-            trigger:{
-              seconds:notyTime
-            }
-          }).then((result)=> {
-
-            console.log(`Added Notification ${item.name}`)
-          })
-
-      }
-
-
-      function tick(item)
-      {
-        const remainingTime =  Math.round((new Date(item.time).getTime() - new Date().getTime())/1000)
-        const showNoTiTime = remainingTime - notificationThreshold;
-        // if the time to show notificaion is small than the threshold value,it means 
-        //we dont have the time to get a full interval and so this can prevent noti appear in deletion case
-        if(showNoTiTime < notificationThreshold)
-          return ;
-         ScheduleCustomNot(showNoTiTime , item) ; 
-        //remaining time is in seconds 
-        //We wanna show notifications 30 minutes or eve 60 minutes before a certain task is about to get over
-        // remaining time ->->  0
-        //1 hour  =  3600seconds
-        // scheduleNotificationTime = remaining time  - 1 hour time
-      }
-      
+    
       //Generate differnt card colour eveyrtime and changing its alpha to make it a bit more subtle
       const generateRandomColor = () => {
         const randomColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)},0.1)`;

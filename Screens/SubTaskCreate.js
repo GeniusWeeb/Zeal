@@ -8,12 +8,13 @@ import { GetCategories, PatchData } from "../Controller/DatabaseController";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { notificationThreshold } from "../Controller/UserController";
 import * as Notifications from 'expo-notifications';
+import { StartNotificationProcess } from "../Controller/NotificationController";
 
 export default function SubTaskCreate()
 {
 
     //SELECT CATEGORY BY DROP DOWN AND THEN TAKE THIS
-     const auth =  firebaseAuth.getAuth(firebaseAppStore.getState().currentApp);
+      const auth =  firebaseAuth.getAuth(firebaseAppStore.getState().currentApp);
       const [taskSelected , setTaskSelected] = React.useState("");
       const [fetchedData, AddData] = React.useState([]);
       const[name , SetName] = React.useState(''); 
@@ -54,44 +55,6 @@ export default function SubTaskCreate()
        
       })}, [])
 
-      async function ScheduleCustomNot(notyTime )
-      { 
-            await Notifications.scheduleNotificationAsync({    
-            content :{
-              title: `Hurry ${auth.currentUser.displayName}!`,
-              body: `Your task ${name} is about to end`
-            },
-            trigger:{
-              seconds:notyTime
-            }
-          }).then((result)=> {
-
-            console.log(`Added Notification ${name}`)
-            SetName("")
-            SetDescription("")
-            nameInputRef.current.clear();
-            descriptionInputRef.current.clear();
-          })
-
-      }
-
-
-      function tick()
-      {
-        const remainingTime =  Math.round((new Date(mydate).getTime() - new Date().getTime())/1000)
-        const showNoTiTime = remainingTime - notificationThreshold;
-        // if the time to show notificaion is small than the threshold value,it means 
-        //we dont have the time to get a full interval and so this can prevent noti appear in deletion case
-        if(showNoTiTime < notificationThreshold)
-          return ;
-         ScheduleCustomNot(showNoTiTime ) ; 
-        //remaining time is in seconds 
-        //We wanna show notifications 30 minutes or eve 60 minutes before a certain task is about to get over
-        // remaining time ->->  0
-        //1 hour  =  3600seconds
-        // scheduleNotificationTime = remaining time  - 1 hour time
-      }
-      
 
     //map this to button onpress
     async function AddSubCategoriesToFireBase()
@@ -112,7 +75,11 @@ export default function SubTaskCreate()
         //name is the linking key 
         const alterEndPoint = `${taskSelected}/names/${name}`;
         PatchData(body , headers , auth.currentUser , alterEndPoint);
-        tick()
+        StartNotificationProcess(mydate , name , auth.currentUser.displayName);
+        SetName("")
+        SetDescription("")
+        nameInputRef.current.clear();
+        descriptionInputRef.current.clear();
        
         
       
@@ -120,18 +87,15 @@ export default function SubTaskCreate()
 
 //This is a subtask -> this will create name , more detail descriptions , maybe a user Defined time ,Idk about a progress bar
 
-    return (
-            
+   return (           
    <View style = {styles.container}>  
-        {/* <View style = {styles.body}>
-       
+        {/* <View style = {styles.body}>     
         </View>    */}
         <View style = {styles.dropdownContainer}>
                         <SelectList data={fetchedData} setSelected={setTaskSelected} 
                         search = {false}
                         placeholder="Select Task Category"    
-                        boxStyles={{ alignContent:"center",backgroundColor :"#9F8772" , elevation:"20" }}
-                        
+                        boxStyles={{ alignContent:"center",backgroundColor :"#9F8772" , elevation:"20" }}                       
                         dropdownTextStyles={{color:"black", fontWeight:900 , fontSize:17}}
                         dropdownItemStyles={{alignItems:"center",direction:"inherit"}}                 
                         disabledItemStyles={{marginHorizontal:20}}
@@ -150,13 +114,13 @@ export default function SubTaskCreate()
         </View>
         <TextInput style={styles.input}  onChangeText={SetDescription} value={descrip}
         placeholder="Enter Task description"  placeholderTextColor="#394867"  keyboardType="default"  ref={descriptionInputRef}/>
-          <View style={[ { marginTop: 25}]}>
+        <View style={[ { marginTop: 25}]}>
         </View>
         <Button title="Show Date Picker" onPress={    showDatePicker} /> 
         <View style={[ { marginTop: 20}]}>
         </View>
         <Text  ref={dateRef} style = {styles.input}> {mydate}  </Text> 
-      <DateTimePickerModal
+        <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="datetime"
         onConfirm={handleConfirm}
