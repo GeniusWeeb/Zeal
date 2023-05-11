@@ -10,6 +10,8 @@
     import HomeIcon from "../assets/HomeIcon.jpg";
     import { useNavigation } from "@react-navigation/native";
     import { Card } from "react-native-paper";
+    import CategoryCreateIcon from "../assets/CategoryCreate.png";
+    
 //#endregio n
 
 
@@ -21,7 +23,7 @@ export default function CategoryCreate()
     const[text , SetText] = React.useState('');
     const auth =  firebaseAuth.getAuth(firebaseAppStore.getState().currentApp);
     const navigate = useNavigation();
-
+    const navigation = useNavigation();
 
     async function AddCategoriesFireBase()
     {
@@ -79,6 +81,16 @@ export default function CategoryCreate()
                 <View style={styles.footer}>
                 </View>
                 <StatusBar style="auto"/> 
+                <View style={styles.footer}>
+                <View style= {styles.footerButtons}>
+                <TouchableOpacity onPress={() =>  navigation.navigate("HomeScreen")}>
+                  <Image source={HomeIcon} style={{ width: 45, height: 40 , top:5}} />
+                </TouchableOpacity>  
+                  <TouchableOpacity onPress={() =>   navigation.navigate("SubTaskCreate")}>
+                  <Image source={CategoryTaskIcon} style={{ width: 50 , height: 50 , top:2}} />
+                </TouchableOpacity>
+                </View>
+              </View>
           </View>
     );
 
@@ -164,5 +176,23 @@ footer: {
     fontWeight:"700",
     color:"#4F4557"
   },
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'black',
+    alignItems: 'stretch',
+    justifyContent: 'space-evenly',
+    height:60,
+    width:400
+  
+    
+  },
+  footerButtons: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    justifyContent: 'space-around',
+  }
 
 });
