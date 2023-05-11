@@ -238,7 +238,8 @@ footer: {
     alignItems: 'center',
     fontWeight: '900',
     bottom: 0,
-    padding:20
+    padding:0,
+  
    
 
   },
