@@ -26,7 +26,7 @@ export default function HomeScreen()
     const user   =  route.params?.user;
     const auth =  firebaseAuth.getAuth(firebaseAppStore.getState().currentApp);
     const [category, setCategory] = useState([]);
-    const  isOnline =  userStore.getState().isUserOnline? true: false ;
+    const  isOnline =  userStore.getState().isUserOnline === true? true: false ;
 
     const generateRandomColor = () => 
     {
@@ -44,9 +44,10 @@ export default function HomeScreen()
     const unsubscribe = navigation.addListener('state', (event) => {
       if (event.data.state.routes[event.data.state.index].name === 'HomeScreen') 
       {   
-        console.log(`User Signed in ??${userStore.getState().isUserSignedIn}`)      
-        if(isOnline)
+           
+        if(isOnline )
         {
+          console.log("Looking for data")
           GetCategories(auth.currentUser).then((result) => {
             let categories = [];
             for (let prop in result) {
@@ -61,7 +62,7 @@ export default function HomeScreen()
     });
   
     return unsubscribe;
-   }, []);
+   }, [navigation ]);
 
 
   async  function Delete (name)

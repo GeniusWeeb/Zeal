@@ -103,6 +103,7 @@ export async function DeleteSubTasks(  headers , currentUser , categoryName , ta
 export async function GetCategories( currentUser)
 {
   // get the Firebase ID token
+  console.log("Checking for token")
   const idToken = await currentUser.getIdToken;
   // set up the request headers, including the Firebase ID token in the Authorization header
   const headers = new Headers({

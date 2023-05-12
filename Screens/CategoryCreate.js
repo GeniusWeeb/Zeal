@@ -50,7 +50,7 @@ export default function CategoryCreate()
     
       PatchData(body , headers , auth.currentUser , tempEndPount);
       Alert.alert("Category added")
-      navigate.navigate("HomeScreen")
+     
       
 
     }
