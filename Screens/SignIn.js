@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useStore } from 'zustand';
 import googleIcon from "../assets/google.png"
 import offlineIcon from "../assets/Offline.png"
+import welcomeIcon from "../assets/Welcome.png"
 import * as Notifications from 'expo-notifications';
 import { Permissions } from 'expo-notifications';
 import { PatchCounters } from '../Controller/DatabaseController';
@@ -164,6 +165,7 @@ export default function SignIn() {
 
   return (
     <ImageBackground source={require('../assets/splash.jpg')} style={styles.backgroundImage} > 
+    <Image source={welcomeIcon} style={{ width: 250, height: 150 }} />
      <TouchableOpacity  style = {{ left: 40, top:184}} onPress={() => promptAsync()}>
       <Image source={googleIcon} style={{ width: 150, height: 150 }} />
     </TouchableOpacity>
