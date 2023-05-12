@@ -2,7 +2,7 @@ import {create} from "zustand";
 import {createJSONStorage, persist} from 'zustand/middleware'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as firebaseAuth from 'firebase/auth';
-
+//60 means 1 minute , right now we are triggering notificaitons 1 minute before it expires for bette QA
 export const notificationThreshold  = 60 ;
 
 
@@ -10,6 +10,7 @@ export const notificationThreshold  = 60 ;
 //In case of no internet connectivity ,  we can safely view the "CATEGORIES
 
 //User Store -> this contains most of the users varaible , ref to the app , ulr ref and much more
+
 const userStore = create(
   persist
   (
