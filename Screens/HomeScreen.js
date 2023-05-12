@@ -106,8 +106,10 @@ export default function HomeScreen()
   return (    
     
     <View style = {styles.container}>
-    <View style={[ { marginTop: 10 }]}>
-        </View>
+         <View style={[ { marginTop: 10 }]}>
+        </View> 
+      
+       {  category.length === 0 &&  <Text style = {{position : "absolute", fontSize:25 , top:340, fontWeight:700 ,color:"grey"}}>Start by creating some categories..</Text> }
         <ScrollView showsVerticalScrollIndicator ={false}  alwaysBounceVertical = {false}>
         {category.map((item, index) => (
           <Swipeable
@@ -142,7 +144,7 @@ export default function HomeScreen()
     <StatusBar style="light"/> 
     <View style={styles.footer}>
       <View style= {styles.footerButtons}>
-     
+   
       <TouchableOpacity onPress={() =>  navigation.navigate("CategoryCreate")}>
         <Image source={CategoryCreateIcon} style={{ width: 45, height: 40 , top:5}} />
        </TouchableOpacity>
